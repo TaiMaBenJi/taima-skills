@@ -1,0 +1,79 @@
+{
+  "profiles": [
+    {
+      "id": "baseline-observe",
+      "label": "Baseline Observe",
+      "use_when": "default starting profile before anti-analysis symptoms are observed",
+      "patch_classes": [
+        "minimal-hooks",
+        "network-first",
+        "no-late-formatting"
+      ]
+    },
+    {
+      "id": "preload-survival",
+      "label": "Preload Survival",
+      "use_when": "bootstrap logic disappears or hostile checks only run once",
+      "patch_classes": [
+        "preload-hooks",
+        "one-shot-bootstrap",
+        "narrow-surface-patches"
+      ]
+    },
+    {
+      "id": "stealth-runtime",
+      "label": "Stealth Runtime",
+      "use_when": "hook tamper checks, toString integrity checks, or UI misdirection appear",
+      "patch_classes": [
+        "toString-preservation",
+        "callframe-over-monkeypatch",
+        "network-truth-priority"
+      ]
+    },
+    {
+      "id": "fingerprint-parity",
+      "label": "Fingerprint Parity",
+      "use_when": "navigator, webdriver, canvas, permissions, WebGL, UA, language, or TLS/client profile symptoms appear",
+      "patch_classes": [
+        "navigator-parity",
+        "client-hint-parity",
+        "transport-profile-check"
+      ]
+    },
+    {
+      "id": "stateful-storage",
+      "label": "Stateful Storage",
+      "use_when": "storage, cookie, IndexedDB, or bootstrap state symptoms appear before signer execution",
+      "patch_classes": [
+        "storage-order-preservation",
+        "cookie-write-correlation",
+        "bootstrap-state-capture"
+      ]
+    },
+    {
+      "id": "chrome-verbatim-sandbox",
+      "label": "Chrome Verbatim Sandbox (jsdom prelude)",
+      "use_when": "jsdom verbatim harness where the embedded VM probes UA/cookie shape/plugins/mimeTypes/languages/chrome object keys/indexedDB tag/devicePixelRatio/outer*/inner*/screen/history.length/document.hidden/caches/speechSynthesis/performance.timing and element rects",
+      "patch_classes": [
+        "ua-override",
+        "cookie-shape",
+        "plugins-5-pdf",
+        "mimetypes-2-pdf",
+        "languages-zh",
+        "chrome-object-keyorder",
+        "indexeddb-tostringtag",
+        "devicepixelratio-1",
+        "outer-viewport-zero",
+        "inner-viewport-756x469",
+        "screen-1920x1080",
+        "history-length-3",
+        "document-hidden",
+        "caches-speechsynthesis-stubs",
+        "performance-timing",
+        "gbcr-min-rect"
+      ],
+      "verified_on": "practice topics 24/26/28/29 (verbatim jsdom/vm harnesses)",
+      "generator": "scripts/scaffold_env_prelude.js"
+    }
+  ]
+}

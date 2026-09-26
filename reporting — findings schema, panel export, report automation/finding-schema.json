@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://reverseops/finding.schema.json",
+  "title": "ReverseOps Finding",
+  "description": "Machine-readable unit of a single pentest/audit finding. One file per finding, or an array of findings. Feeds the ReverseOps panel (panel/) via scripts/mkreport.py.",
+  "type": "object",
+  "required": ["id", "title", "severity", "status"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(CRI|HIG|MED|LOW|INF)-[0-9]{3,}$",
+      "description": "Stable finding ID, prefixed by severity: HIG-001, MED-002 ..."
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "case": {
+      "type": "string",
+      "description": "Case/engagement name (folder under work/ or report slug)."
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low", "info"]
+    },
+    "cvss": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10,
+      "description": "Optional CVSS base score."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["open", "confirmed", "fixed", "accepted", "false-positive"]
+    },
+    "category": {
+      "type": "string",
+      "description": "Free-form taxonomy bucket, e.g. 'auth', 'rate-limit', 'info-disclosure', 'injection'. Keep names lowercase-kebab so charts group cleanly."
+    },
+    "cwe": { "type": "string", "description": "e.g. CWE-307" },
+    "owasp": { "type": "string", "description": "e.g. A07:2021 Identification and Authentication Failures" },
+    "attack": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$" },
+      "description": "MITRE ATT&CK technique IDs, e.g. T1110.001"
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "host": { "type": "string" },
+        "url": { "type": "string" },
+        "asset": { "type": "string", "description": "APK, binary, service, repo ..." }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Evidence chain entries. Mirrors skills/ops/evidence-finding-path.md.",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "properties": {
+          "kind": { "type": "string", "enum": ["request", "response", "log", "screenshot", "file", "command", "note"] },
+          "ref": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "poc": { "type": "string", "description": "Minimal reproduction (curl, script, steps)." },
+    "remediation": { "type": "string" },
+    "references": { "type": "array", "items": { "type": "string" } },
+    "discovered": { "type": "string", "format": "date", "description": "YYYY-MM-DD" },
+    "report": { "type": "string", "description": "Source markdown report this finding was extracted from (path relative to repo root)." }
+  }
+}

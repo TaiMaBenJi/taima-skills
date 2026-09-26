@@ -1,0 +1,606 @@
+{
+  "schema": "js-reverse-ops-public-benchmark-cases-v1",
+  "cases": [
+    {
+      "id": "pattern_xhr_open_rewrite",
+      "type": "pattern",
+      "text": "XMLHttpRequest.open rewrites URL, global token missing, right length token fails, runtime cookie required",
+      "expect": {
+        "top_pattern": "xhr_open_url_rewrite_runtime_replay",
+        "min_score": 0.4,
+        "playbook": "playbooks/xhr-open-url-rewrite-runtime-replay.md",
+        "hook_preset": "xhr-open-rewrite"
+      }
+    },
+    {
+      "id": "pattern_bootstrap_digest",
+      "type": "pattern",
+      "text": "cookie written multiple times during bootstrap, digest chain produces wrapped cookie, short ttl",
+      "expect": {
+        "top_pattern": "bootstrap_digest_ladder",
+        "min_score": 0.6,
+        "playbook": "playbooks/bootstrap-digest-ladder.md",
+        "hook_preset": "cookie-write"
+      }
+    },
+    {
+      "id": "pattern_transport_profile",
+      "type": "pattern",
+      "text": "same fields succeed in one client but fail in another, headers look correct, signer accepted in browser but rejected in script",
+      "expect": {
+        "top_pattern": "transport_profile_ladder",
+        "min_score": 0.5,
+        "playbook": "playbooks/transport-profile-ladder.md",
+        "hook_preset": "fetch-signature"
+      }
+    },
+    {
+      "id": "route_xhr_notes_to_playbook",
+      "type": "route",
+      "target": "examples/sample-target.js",
+      "notes": "XMLHttpRequest.open rewrites URL and global token missing; transport hook adds query",
+      "expect": {
+        "family": "xhr-open-url-rewrite-runtime-replay",
+        "stage": "runtime",
+        "playbook": "playbooks/xhr-open-url-rewrite-runtime-replay.md",
+        "hook_preset": "xhr-open-rewrite",
+        "next_lane": "runtime-hook-capture"
+      }
+    },
+    {
+      "id": "route_wasm_notes_to_playbook",
+      "type": "route",
+      "target": "examples/sample-target.js",
+      "notes": "server time input is captured first, then wasm signer and module helper compute a time gated request",
+      "expect": {
+        "family": "server-time-gated-wasm-signer",
+        "stage": "runtime",
+        "playbook": "playbooks/server-time-gated-wasm-signer.md",
+        "hook_preset": "business-function",
+        "next_lane": "crypto-entry-discovery"
+      }
+    },
+    {
+      "id": "route_html_sample",
+      "type": "route",
+      "target": "examples/sample-page.html",
+      "expect": {
+        "family": "html-page",
+        "stage": "locate",
+        "sequence_item": "scripts/extract_page_contract.js",
+        "next_lane": "locate-request-contract"
+      }
+    },
+    {
+      "id": "runtime_capture_wasm_storage_gap",
+      "type": "runtime_capture",
+      "notes": "final fetch adds signature header; token seed is read from localStorage and a wasm module helper computes nonce before replay fails",
+      "expect": {
+        "missing_surface": "wasm-worker-boundary",
+        "recommended_preset": "business-function",
+        "capture_mode": "summary"
+      }
+    },
+    {
+      "id": "env_patch_response_shape_divergence",
+      "type": "env_patch",
+      "divergence_record": "examples/sample-replay-divergent-record.json",
+      "notes": "replay request is accepted but response shape returns error instead of items; likely missing bootstrap prerequisite or dataset branch state",
+      "expect": {
+        "first_divergence_kind": "shape mismatch",
+        "recommended_patch": "response-shape-prerequisite",
+        "matched_signal": "shape mismatch"
+      }
+    },
+    {
+      "id": "static_toolchain_ast_then_runtime",
+      "type": "static_toolchain",
+      "target": "examples/sample-static-obfuscated.js",
+      "notes": "constant fold the request builder, recover API route string, then verify against runtime or replay evidence before promoting claims",
+      "expect": {
+        "recommended_step": "ast-readability-pass",
+        "selected_step": "runtime-correlation",
+        "local_script": "scripts/run_ast_pipeline.js"
+      }
+    },
+    {
+      "id": "static_toolchain_sourcemap_first",
+      "type": "static_toolchain",
+      "target": "examples/sample-sourcemap-bundle.js",
+      "notes": "source map is available from sourceMappingURL; recover original source before AST cleanup or semantic renaming",
+      "expect": {
+        "recommended_step": "source-map-recovery",
+        "selected_step": "runtime-correlation",
+        "local_script": "scripts/trace_module_graph.js",
+        "source_mapping_url": "sample-sourcemap-bundle.js.map"
+      }
+    },
+    {
+      "id": "static_truth_decoy_stays_inferred",
+      "type": "static_truth",
+      "target": "examples/sample-static-decoy.js",
+      "out": "tmp/static-decoy-recovered.js",
+      "expect": {
+        "state": "inferred",
+        "delivery_ready": false,
+        "risk_signal": "decoy-branch"
+      }
+    },
+    {
+      "id": "static_truth_runtime_divergence_blocks_delivery",
+      "type": "static_truth",
+      "target": "examples/sample-static-readable-wrong.js",
+      "runtime_evidence": "examples/sample-static-runtime-divergence.json",
+      "expect": {
+        "state": "divergent",
+        "delivery_ready": false,
+        "risk_signal": "runtime-divergence"
+      }
+    },
+    {
+      "id": "domain_handoff_wasm_boundary",
+      "type": "domain_handoff",
+      "notes": "page loads WebAssembly.instantiateStreaming for signer.wasm; JS glue calls Module.ccall to compute nonce before final fetch",
+      "expect": {
+        "recommended_handoff": "wasm-boundary",
+        "matched_signal": "webassembly",
+        "boundary_artifact": "wasm asset URL or local file path"
+      }
+    },
+    {
+      "id": "domain_handoff_packet_boundary",
+      "type": "domain_handoff",
+      "notes": "operator has a sanitized pcapng packet summary; tshark recovered tcp stream 4 with the request response sample used for replay analysis",
+      "expect": {
+        "recommended_handoff": "packet-boundary",
+        "matched_signal": "pcapng",
+        "boundary_artifact": "pcap or pcapng path"
+      }
+    },
+    {
+      "id": "domain_handoff_mobile_shell_boundary",
+      "type": "domain_handoff",
+      "notes": "android webview apk uses okhttp through a native bridge; frida captured the mobile shell request sample before python replay",
+      "expect": {
+        "recommended_handoff": "mobile-shell-boundary",
+        "matched_signal": "android",
+        "boundary_artifact": "APK/IPA or package identifier"
+      }
+    },
+    {
+      "id": "domain_handoff_record_wasm_boundary_valid",
+      "type": "domain_handoff_record",
+      "record": "examples/sample-domain-handoff-record.json",
+      "strict": true,
+      "expect": {
+        "ok": true,
+        "handoff_id": "wasm-boundary",
+        "min_artifact_count": 3,
+        "max_warnings": 0,
+        "boundary_includes": "does not promote"
+      }
+    },
+    {
+      "id": "domain_handoff_record_packet_boundary_valid",
+      "type": "domain_handoff_record",
+      "record": "examples/sample-packet-domain-handoff-record.json",
+      "strict": true,
+      "expect": {
+        "ok": true,
+        "handoff_id": "packet-boundary",
+        "min_artifact_count": 3,
+        "max_warnings": 0,
+        "boundary_includes": "does not promote"
+      }
+    },
+    {
+      "id": "domain_handoff_record_mobile_boundary_valid",
+      "type": "domain_handoff_record",
+      "record": "examples/sample-mobile-domain-handoff-record.json",
+      "strict": true,
+      "expect": {
+        "ok": true,
+        "handoff_id": "mobile-shell-boundary",
+        "min_artifact_count": 3,
+        "max_warnings": 0,
+        "boundary_includes": "does not promote"
+      }
+    },
+    {
+      "id": "domain_handoff_record_native_boundary_valid",
+      "type": "domain_handoff_record",
+      "record": "examples/sample-native-domain-handoff-record.json",
+      "strict": true,
+      "expect": {
+        "ok": true,
+        "handoff_id": "native-binary-boundary",
+        "min_artifact_count": 3,
+        "max_warnings": 0,
+        "boundary_includes": "does not promote"
+      }
+    },
+    {
+      "id": "domain_handoff_record_debugger_boundary_valid",
+      "type": "domain_handoff_record",
+      "record": "examples/sample-debugger-domain-handoff-record.json",
+      "strict": true,
+      "expect": {
+        "ok": true,
+        "handoff_id": "debugger-frame-boundary",
+        "min_artifact_count": 3,
+        "max_warnings": 0,
+        "boundary_includes": "does not promote"
+      }
+    },
+    {
+      "id": "domain_handoff_record_proxy_rpc_boundary_valid",
+      "type": "domain_handoff_record",
+      "record": "examples/sample-proxy-rpc-domain-handoff-record.json",
+      "strict": true,
+      "expect": {
+        "ok": true,
+        "handoff_id": "proxy-rpc-boundary",
+        "min_artifact_count": 3,
+        "max_warnings": 0,
+        "boundary_includes": "does not promote"
+      }
+    },
+    {
+      "id": "release_risk_raw_capture_gate",
+      "type": "release_risk",
+      "paths": [
+        "captures/browser-session.har"
+      ],
+      "expect": {
+        "risk_level": "high",
+        "finding_class": "raw_capture_artifacts",
+        "severity": "high",
+        "min_findings": 1
+      }
+    },
+    {
+      "id": "external_matrix_governance_lead",
+      "type": "external_matrix",
+      "focus": "evidence_and_replay_governance",
+      "expect": {
+        "top_profile": "js-reverse-ops",
+        "dimension": "evidence_and_replay_governance",
+        "dimension_leader": "js-reverse-ops",
+        "min_js_score": 100,
+        "no_priority_gaps": true
+      }
+    },
+    {
+      "id": "anti_detection_fingerprint_parity",
+      "type": "anti_detection",
+      "symptoms": "navigator.webdriver is true, canvas and webgl differ, accept-language and user-agent client hints differ from browser capture; do not edit signer yet",
+      "expect": {
+        "selected_profile": "fingerprint-parity",
+        "matched_profile": "fingerprint-parity",
+        "boundary_includes": "does not prove signer correctness",
+        "next_verification_includes": "request parity"
+      }
+    },
+    {
+      "id": "anti_detection_stateful_storage",
+      "type": "anti_detection",
+      "symptoms": "bootstrap state writes localStorage seed, document cookie changes twice, and storage write order affects first request before replay",
+      "expect": {
+        "selected_profile": "stateful-storage",
+        "matched_profile": "stateful-storage",
+        "boundary_includes": "server acceptance",
+        "next_verification_includes": "replay acceptance"
+      }
+    },
+    {
+      "id": "mcp_smoke_chrome_devtools_surface",
+      "type": "mcp_smoke",
+      "server_family": "chrome_devtools_mcp",
+      "expect": {
+        "server_family": "chrome_devtools_mcp",
+        "min_coverage_score": 100,
+        "planned_capability": "debugger_frames",
+        "state": "planned"
+      }
+    },
+    {
+      "id": "mcp_smoke_record_chrome_devtools_observed",
+      "type": "mcp_smoke_record",
+      "server_family": "chrome_devtools_mcp",
+      "record": "examples/sample-browser-mcp-execution-record.json",
+      "expect": {
+        "server_family": "chrome_devtools_mcp",
+        "ok": true,
+        "min_coverage_score": 100,
+        "observed_capability": "debugger_frames"
+      }
+    },
+    {
+      "id": "mcp_smoke_record_playwright_observed",
+      "type": "mcp_smoke_record",
+      "server_family": "playwright_mcp",
+      "record": "examples/sample-playwright-mcp-execution-record.json",
+      "expect": {
+        "server_family": "playwright_mcp",
+        "ok": true,
+        "min_coverage_score": 100,
+        "observed_capability": "runtime_hooking"
+      }
+    },
+    {
+      "id": "mcp_smoke_record_browser_tools_observed",
+      "type": "mcp_smoke_record",
+      "server_family": "browser_tools_mcp",
+      "record": "examples/sample-browser-tools-mcp-execution-record.json",
+      "expect": {
+        "server_family": "browser_tools_mcp",
+        "ok": true,
+        "min_coverage_score": 100,
+        "observed_capability": "debugger_frames"
+      }
+    },
+    {
+      "id": "mcp_delivery_loop_promotes_observed_record",
+      "type": "mcp_delivery_loop",
+      "target": "examples/sample-target.js",
+      "notes": "XMLHttpRequest.open rewrites URL and global token missing; transport hook adds query",
+      "server_family": "chrome_devtools_mcp",
+      "record": "examples/sample-browser-mcp-execution-record.json",
+      "out": "tmp/mcp-delivery-loop-benchmark",
+      "expect": {
+        "loop_status": "observed-record-promoted",
+        "record_verified": true,
+        "validation_ok": true,
+        "readiness": "not-ready",
+        "files": [
+          "mcp-smoke-plan.json",
+          "mcp-execution-record-template.json",
+          "mcp-delivery-loop-summary.json",
+          "mcp-delivery-loop-summary.md"
+        ]
+      }
+    },
+    {
+      "id": "replay_diagnosis_response_shape_prerequisite",
+      "type": "replay_diagnosis",
+      "replay_record": "examples/sample-replay-divergent-record.json",
+      "notes": "replay request is accepted but response shape returns error instead of items; likely missing bootstrap prerequisite or dataset branch state",
+      "expect": {
+        "recommended_diagnosis": "response-shape-prerequisite",
+        "matched_signal": "observed error",
+        "min_divergence_count": 1,
+        "next_script": "scripts/plan_env_patch_from_divergence.js"
+      }
+    },
+    {
+      "id": "replay_diagnosis_transport_403_profile",
+      "type": "replay_diagnosis",
+      "replay_record": "examples/sample-replay-transport-403-record.json",
+      "notes": "same request fields replay as 403 in script while browser succeeds; compare user-agent origin referer accept-language and client profile before editing signer code",
+      "expect": {
+        "recommended_diagnosis": "transport-profile-drift",
+        "matched_signal": "403",
+        "min_divergence_count": 1,
+        "next_script": "scripts/compare_external_replay_to_runtime.js"
+      }
+    },
+    {
+      "id": "replay_diagnosis_crypto_token_mismatch",
+      "type": "replay_diagnosis",
+      "replay_record": "examples/sample-replay-crypto-mismatch-record.json",
+      "notes": "signature mismatch and token mismatch after request contract parity; compare helper input output pairs before editing crypto internals",
+      "expect": {
+        "recommended_diagnosis": "crypto-helper-output",
+        "matched_signal": "signature mismatch",
+        "min_divergence_count": 1,
+        "next_script": "scripts/compare_external_replay_to_runtime.js"
+      }
+    },
+    {
+      "id": "replay_diagnosis_time_ttl_expired",
+      "type": "replay_diagnosis",
+      "replay_record": "examples/sample-replay-ttl-expired-record.json",
+      "notes": "accepted runtime sample expires in local replay; ttl and timestamp window drift from server time must be frozen before replay",
+      "expect": {
+        "recommended_diagnosis": "time-source-drift",
+        "matched_signal": "timestamp",
+        "min_divergence_count": 1,
+        "next_script": "scripts/compare_external_replay_to_runtime.js"
+      }
+    },
+    {
+      "id": "next_action_runtime_capture_before_replay",
+      "type": "next_action",
+      "target": "examples/sample-target.js",
+      "notes": "XMLHttpRequest.open rewrites URL and global token missing; transport hook adds query",
+      "out": "tmp/next-action-benchmark",
+      "expect": {
+        "recommended_action": "capture-runtime-truth",
+        "command_includes": "diagnose_runtime_capture_gaps.js",
+        "reason_includes": "delivery readiness: not-ready",
+        "readiness": "not-ready"
+      }
+    },
+    {
+      "id": "replay_client_from_accepted_record",
+      "type": "replay_client",
+      "replay_record": "examples/sample-replay-record.json",
+      "out": "tmp/replay-client-benchmark",
+      "expect": {
+        "generation_status": "accepted-replay-template",
+        "manifest_status": "accepted-replay-template",
+        "method": "GET",
+        "path": "/api/demo/list",
+        "node_check": true,
+        "validation_ok": true,
+        "files": [
+          "replay-client.node.js",
+          "replay-client.py",
+          "replay-client-manifest.json",
+          "replay-client-notes.md"
+        ]
+      }
+    },
+    {
+      "id": "runner_xhr_playbook_scaffold",
+      "type": "playbook_run",
+      "target": "examples/sample-target.js",
+      "notes": "XMLHttpRequest.open rewrites URL and global token missing; transport hook adds query",
+      "out": "tmp/benchmark-playbook-run",
+      "expect": {
+        "family": "xhr-open-url-rewrite-runtime-replay",
+        "stage": "runtime",
+        "playbook": "playbooks/xhr-open-url-rewrite-runtime-replay.md",
+        "files": [
+          "playbook-run.json",
+          "hook-profile.json",
+          "evidence.json",
+          "claim-set.json",
+          "risk-summary.json",
+          "provenance-graph.json",
+          "provenance-summary.md",
+          "operator-review.md",
+          "replay-status.json"
+        ]
+      }
+    },
+    {
+      "id": "static_recover_ast_pipeline",
+      "type": "static_recover",
+      "target": "examples/sample-static-obfuscated.js",
+      "out": "tmp/static-recovered.js",
+      "expect": {
+        "contains": [
+          "/api/demo/list",
+          "var page = 7"
+        ]
+      }
+    },
+    {
+      "id": "promote_hook_evidence_delivery",
+      "type": "promote_evidence",
+      "target": "examples/sample-target.js",
+      "notes": "XMLHttpRequest.open rewrites URL and global token missing; transport hook adds query",
+      "hook_evidence": "examples/sample-hook-evidence.json",
+      "out": "tmp/promote-delivery-run",
+      "expect": {
+        "provenance_status": "runtime-captured",
+        "min_verified_claims": 2,
+        "delivery_readiness": "evidence-only"
+      }
+    },
+    {
+      "id": "promote_replay_accepted_delivery",
+      "type": "promote_evidence",
+      "target": "examples/sample-target.js",
+      "notes": "XMLHttpRequest.open rewrites URL and global token missing; transport hook adds query",
+      "hook_evidence": "examples/sample-hook-evidence.json",
+      "replay_record": "examples/sample-replay-record.json",
+      "out": "tmp/promote-accepted-replay-run",
+      "expect": {
+        "provenance_status": "runtime-accepted",
+        "replay_acceptance_status": "accepted",
+        "min_verified_claims": 3,
+        "delivery_readiness": "delivery-ready"
+      }
+    },
+    {
+      "id": "promote_replay_divergence_gate",
+      "type": "promote_evidence",
+      "target": "examples/sample-target.js",
+      "notes": "XMLHttpRequest.open rewrites URL and global token missing; transport hook adds query",
+      "hook_evidence": "examples/sample-hook-evidence.json",
+      "replay_record": "examples/sample-replay-divergent-record.json",
+      "out": "tmp/promote-divergent-replay-run",
+      "expect": {
+        "provenance_status": "runtime-captured",
+        "replay_acceptance_status": "rejected",
+        "min_verified_claims": 2,
+        "min_replay_quality_errors": 1,
+        "delivery_readiness": "evidence-only"
+      }
+    },
+    {
+      "id": "promote_state_machine_acceptance_gate",
+      "type": "promote_evidence",
+      "target": "examples/sample-target.js",
+      "notes": "XMLHttpRequest.open rewrites URL and global token missing; transport hook adds query",
+      "hook_evidence": "examples/sample-hook-evidence.json",
+      "replay_record": "examples/sample-replay-divergent-record.json",
+      "out": "tmp/promote-state-machine-gate-run",
+      "expect": {
+        "provenance_status": "runtime-captured",
+        "replay_acceptance_status": "rejected",
+        "min_verified_claims": 2,
+        "min_replay_quality_errors": 1,
+        "delivery_readiness": "evidence-only"
+      }
+    },
+    {
+      "id": "misdiag_m1_time_derived_key",
+      "type": "pattern",
+      "text": "derived key string differs between environments, all other streams byte-identical, harness clock frozen days before capture, key digits change when run at a different hour",
+      "expect": {
+        "top_pattern": "env_gated_crypto_differential",
+        "min_score": 0.05,
+        "playbook": "playbooks/env-gated-crypto-differential.md"
+      }
+    },
+    {
+      "id": "misdiag_m2_stable_total_maze",
+      "type": "pattern",
+      "text": "every page returns 200 with well formed payloads but submitted total is wrong answer, replayed url still 200, data differs between two clean runs",
+      "expect": {
+        "top_pattern": "env_gated_crypto_differential",
+        "min_score": 0.05,
+        "playbook": "playbooks/env-gated-crypto-differential.md"
+      }
+    },
+    {
+      "id": "misdiag_m3_timer_selfcheck_empty_token",
+      "type": "pattern",
+      "text": "first token valid but later pagination tokens are empty string, no exception raised, no global state change, timers stubbed synchronously",
+      "expect": {
+        "top_pattern": "env_gated_crypto_differential",
+        "min_score": 0.05,
+        "playbook": "playbooks/env-gated-crypto-differential.md"
+      }
+    },
+    {
+      "id": "misdiag_m4_host_eval_scope_leak",
+      "type": "pattern",
+      "text": "document is not defined raised from eval frames inside vm sandbox, sandbox passed host eval and host Function into context, indirect eval payload resolves against host global",
+      "expect": {
+        "top_pattern": "jsdom_native_vm_differential",
+        "min_score": 0.05
+      }
+    },
+    {
+      "id": "misdiag_m5_class_source_leak",
+      "type": "pattern",
+      "text": "constructor stringification leaks class source code, object prototype toString class tag probe fails, page aborts during init with bytecode throw",
+      "expect": {
+        "top_pattern": "jsdom_native_vm_differential",
+        "min_score": 0.05
+      }
+    },
+    {
+      "id": "misdiag_m6_random_iv_vs_gate",
+      "type": "pattern",
+      "text": "two runs of the same harness produce different tokens for identical inputs, unclear whether random iv or environment gate causes divergence",
+      "expect": {
+        "top_pattern": "env_gated_crypto_differential",
+        "min_score": 0.05
+      }
+    },
+    {
+      "id": "misdiag_m7_helper_endpoint_trap",
+      "type": "pattern",
+      "text": "page exposes helper endpoint that returns data while challenge script also loads, helper solved but protected request still gates the data",
+      "expect": {
+        "top_pattern": "env_gated_crypto_differential",
+        "min_score": 0.05
+      }
+    }
+  ]
+}

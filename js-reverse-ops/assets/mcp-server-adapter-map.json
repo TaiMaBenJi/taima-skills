@@ -1,0 +1,170 @@
+{
+  "schema": "js-reverse-ops-mcp-server-adapter-map-v1",
+  "updated_at": "2026-06-04",
+  "principle": "Plan against normalized capabilities, execute through the active MCP server, and ingest observed outputs back into evidence records.",
+  "capabilities": [
+    {
+      "id": "browser_navigation",
+      "normalized_actions": [
+        "open_page",
+        "reload_page",
+        "select_target",
+        "trigger_user_action"
+      ],
+      "expected_evidence": [
+        "target_url",
+        "page_loaded",
+        "navigation_status"
+      ]
+    },
+    {
+      "id": "network_interception",
+      "normalized_actions": [
+        "list_requests",
+        "capture_request",
+        "capture_response",
+        "trace_initiator"
+      ],
+      "expected_evidence": [
+        "request_url",
+        "method",
+        "headers",
+        "body_shape",
+        "initiator"
+      ]
+    },
+    {
+      "id": "runtime_hooking",
+      "normalized_actions": [
+        "inject_preload",
+        "install_fetch_hook",
+        "install_xhr_hook",
+        "install_cookie_hook",
+        "read_hook_summary"
+      ],
+      "expected_evidence": [
+        "hook_installed",
+        "matched_observations",
+        "observed_outputs"
+      ]
+    },
+    {
+      "id": "debugger_frames",
+      "normalized_actions": [
+        "set_breakpoint",
+        "resume",
+        "capture_callframe",
+        "capture_locals"
+      ],
+      "expected_evidence": [
+        "script_id",
+        "callframe",
+        "locals",
+        "stack"
+      ]
+    },
+    {
+      "id": "source_recovery",
+      "normalized_actions": [
+        "list_scripts",
+        "fetch_script_source",
+        "resolve_sourcemap",
+        "save_source_snapshot"
+      ],
+      "expected_evidence": [
+        "script_url",
+        "source_hash",
+        "sourcemap_status"
+      ]
+    },
+    {
+      "id": "wasm_runtime_hints",
+      "normalized_actions": [
+        "capture_wasm_instantiate",
+        "list_wasm_imports",
+        "list_wasm_exports"
+      ],
+      "expected_evidence": [
+        "wasm_url",
+        "imports",
+        "exports"
+      ]
+    }
+  ],
+  "server_families": [
+    {
+      "id": "chrome_devtools_mcp",
+      "description": "CDP-style browser control and debugging servers.",
+      "typical_strengths": [
+        "page control",
+        "network observation",
+        "runtime evaluation",
+        "debugger frames"
+      ]
+    },
+    {
+      "id": "js_reverse_mcp",
+      "description": "Reverse-engineering-specific browser MCP servers with agent-first CDP debugging: silent/stealth navigation modes, optional source-level fingerprint patches, and takeover of an already-running browser (--browserUrl).",
+      "typical_strengths": [
+        "set_breakpoint_on_text: text-located breakpoints inside minified code",
+        "break_on_xhr: XHR/fetch URL breakpoints with get_paused_info call stack + scoped variables",
+        "trace_function: non-pausing logpoint tracing into webpack-packed internals",
+        "inject_before_load / preload hooks for bootstrap-time signers",
+        "get_request_initiator: request-to-callsite attribution",
+        "save_script_source: large/WASM script spillover to disk for offline analysis",
+        "anti-detection: protocol-level Patchright + optional source-level CloakBrowser",
+        "deobfuscation helpers (Babel fast path + webcrack deep mode on Pro forks)"
+      ],
+      "pairing_note": "When this family is present, prefer its execution surface for live capture; keep js-reverse-ops for methodology (stage gates, misdiagnosis triage), verification (stable-total rule), and delivery scaffolding. The built-in scripts/cdp_minibrowser.js remains the zero-dependency fallback when no MCP is installed. VALIDATED 2026-09 (v4.0.5, live target): page control, in-page evaluate (requires confirm:true; function-literal form), network capture of token-bearing requests, and break_on_xhr all work; stealth navigation may itself be fingerprinted by VM shells (see misdiagnosis M8) — prefer in-page triggers under stealth sessions."
+    },
+    {
+      "id": "playwright_mcp",
+      "description": "Playwright-style browser MCP servers focused on deterministic browser automation with request observation and runtime evaluation.",
+      "typical_strengths": [
+        "navigation",
+        "DOM action triggers",
+        "request routing",
+        "runtime evaluation"
+      ]
+    },
+    {
+      "id": "browser_tools_mcp",
+      "description": "Browser-tools MCP servers that expose tab, console, network, and debugger-style browser inspection.",
+      "typical_strengths": [
+        "page inspection",
+        "console and network summaries",
+        "runtime evaluation",
+        "debugger-style frame capture"
+      ]
+    },
+    {
+      "id": "generic_browser_automation_mcp",
+      "description": "Automation-first browser MCP servers that can still provide useful runtime truth.",
+      "typical_strengths": [
+        "navigation",
+        "DOM action triggers",
+        "screenshots",
+        "basic network state"
+      ]
+    },
+    {
+      "id": "parameter_blueprint_mcp",
+      "description": "Knowledge-base MCP servers that accumulate per-target parameter blueprints (verified pure-Node reproduction scripts for real-world anti-bot parameters).",
+      "typical_strengths": [
+        "per-parameter pure-Node reproduction scripts (harness + patched env, no browser at replay time)",
+        "blueprint knowledge base keyed by target parameter family",
+        "session snapshots for login-state reuse",
+        "task orchestration (start/orchestrate reverse tasks)"
+      ],
+      "pairing_note": "The blueprint pattern maps onto js-reverse-ops case notes + pattern-outcome telemetry: record each solved parameter as a sanitized blueprint entry and let ranking evolve from solve telemetry."
+    }
+  ],
+  "record_requirements": [
+    "server_family",
+    "tool_name",
+    "normalized_action",
+    "status",
+    "observed_outputs",
+    "artifact_paths"
+  ]
+}

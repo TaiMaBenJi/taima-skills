@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frida iOS Hooks"
+  short_description: "Instrument iOS apps with Frida"
+  default_prompt: "Use $frida-ios-hooks to inspect and hook an iOS app."

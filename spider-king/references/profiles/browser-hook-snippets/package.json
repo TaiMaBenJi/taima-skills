@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "node tests/static-contract.test.js && node tests/runtime-contract.test.js"
+  }
+}

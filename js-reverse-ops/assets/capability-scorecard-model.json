@@ -1,0 +1,199 @@
+{
+  "schema": "js-reverse-ops-capability-scorecard-model-v1",
+  "dimensions": [
+    {
+      "id": "workflow_routing",
+      "label": "Workflow routing",
+      "weight": 10,
+      "evidence": [
+        "scripts/js_reverse_ops.js",
+        "repo-map.json"
+      ]
+    },
+    {
+      "id": "pattern_memory",
+      "label": "Pattern memory",
+      "weight": 10,
+      "evidence": [
+        "assets/case-pattern-index.json",
+        "scripts/map_case_to_pattern.js"
+      ]
+    },
+    {
+      "id": "playbook_runner",
+      "label": "Playbook runner",
+      "weight": 10,
+      "evidence": [
+        "scripts/run_playbook.js"
+      ]
+    },
+    {
+      "id": "delivery_artifacts",
+      "label": "Delivery artifacts",
+      "weight": 10,
+      "evidence": [
+        "scripts/validate_delivery_artifacts.js",
+        "references/output-contract.md"
+      ]
+    },
+    {
+      "id": "evidence_promotion",
+      "label": "Evidence promotion",
+      "weight": 10,
+      "evidence": [
+        "scripts/promote_delivery_evidence.js",
+        "scripts/diagnose_replay_failure.js",
+        "scripts/generate_replay_delivery_client.js",
+        "scripts/validate_replay_delivery_client.js",
+        "examples/sample-hook-evidence.json",
+        "examples/sample-replay-record.json",
+        "examples/sample-replay-divergent-record.json",
+        "examples/sample-replay-transport-403-record.json",
+        "examples/sample-replay-crypto-mismatch-record.json",
+        "examples/sample-replay-ttl-expired-record.json"
+      ]
+    },
+    {
+      "id": "public_benchmarks",
+      "label": "Public benchmarks",
+      "weight": 10,
+      "evidence": [
+        "assets/public-benchmark-cases.json",
+        "scripts/run_public_benchmarks.js"
+      ]
+    },
+    {
+      "id": "release_gate",
+      "label": "Release gate",
+      "weight": 10,
+      "evidence": [
+        "scripts/check_public_release.sh",
+        "scripts/explain_public_release_risk.js",
+        "assets/release-risk-policy.json",
+        ".github/workflows/public-release-check.yml"
+      ]
+    },
+    {
+      "id": "install_publish",
+      "label": "Install and publish automation",
+      "weight": 10,
+      "evidence": [
+        "scripts/install_local.sh",
+        "scripts/publish_release.sh",
+        "scripts/jsro.js",
+        "package.json"
+      ]
+    },
+    {
+      "id": "playbook_library",
+      "label": "Playbook library",
+      "weight": 10,
+      "evidence": [
+        "playbooks/xhr-open-url-rewrite-runtime-replay.md",
+        "playbooks/bootstrap-digest-ladder.md",
+        "playbooks/server-time-gated-wasm-signer.md",
+        "playbooks/transport-profile-ladder.md"
+      ]
+    },
+    {
+      "id": "static_recover_tools",
+      "label": "Static recovery tools",
+      "weight": 10,
+      "evidence": [
+        "scripts/recover_string_table.js",
+        "scripts/run_ast_pipeline.js",
+        "scripts/trace_module_graph.js",
+        "scripts/plan_static_toolchain.js",
+        "examples/sample-sourcemap-bundle.js",
+        "scripts/assess_static_recovery_truth.js",
+        "assets/static-verification-gate-model.json",
+        "examples/sample-static-runtime-divergence.json",
+        "assets/static-toolchain-decision-model.json"
+      ]
+    },
+    {
+      "id": "runtime_tool_surface",
+      "label": "Runtime tool surface",
+      "weight": 10,
+      "evidence": [
+        "scripts/scaffold_hook_profile.js",
+        "scripts/build_hook_action_plan.js",
+        "scripts/build_hook_execution_runbook.js",
+        "scripts/diagnose_runtime_capture_gaps.js",
+        "scripts/plan_browser_mcp_smoke.js",
+        "scripts/verify_browser_mcp_smoke_record.js",
+        "scripts/run_mcp_delivery_loop.js",
+        "assets/hook-presets.json",
+        "assets/runtime-capture-surface-model.json",
+        "assets/browser-mcp-smoke-model.json",
+        "references/hook-capture-modes.md"
+      ]
+    },
+    {
+      "id": "market_gap_scorecard",
+      "label": "Market gap scorecard",
+      "weight": 10,
+      "evidence": [
+        "assets/market-leading-gap-model.json",
+        "assets/mcp-server-adapter-map.json",
+        "scripts/generate_market_gap_scorecard.js",
+        "scripts/compare_mcp_execution_records.js",
+        "scripts/validate_evidence_state_transitions.js",
+        "scripts/assess_delivery_readiness.js",
+        "scripts/recommend_next_action.js",
+        "scripts/select_anti_detection_profile.js",
+        "assets/anti-detection-profiles.json",
+        "scripts/generate_task_lane_plan.js",
+        "scripts/diagnose_runtime_capture_gaps.js",
+        "scripts/diagnose_replay_failure.js",
+        "scripts/generate_replay_delivery_client.js",
+        "scripts/validate_replay_delivery_client.js",
+        "scripts/plan_env_patch_from_divergence.js",
+        "scripts/plan_static_toolchain.js",
+        "examples/sample-sourcemap-bundle.js",
+        "scripts/assess_static_recovery_truth.js",
+        "assets/static-verification-gate-model.json",
+        "scripts/generate_domain_handoff_plan.js",
+        "scripts/validate_domain_handoff_record.js",
+        "examples/sample-domain-handoff-record.json",
+        "examples/sample-packet-domain-handoff-record.json",
+        "examples/sample-mobile-domain-handoff-record.json",
+        "examples/sample-native-domain-handoff-record.json",
+        "examples/sample-debugger-domain-handoff-record.json",
+        "examples/sample-proxy-rpc-domain-handoff-record.json",
+        "scripts/explain_public_release_risk.js",
+        "assets/release-risk-policy.json",
+        "scripts/compare_external_skill_matrix.js",
+        "assets/external-skill-regression-model.json",
+        "scripts/plan_browser_mcp_smoke.js",
+        "assets/browser-mcp-smoke-model.json",
+        "scripts/verify_browser_mcp_smoke_record.js",
+        "scripts/run_mcp_delivery_loop.js",
+        "scripts/diagnose_replay_failure.js",
+        "examples/sample-browser-mcp-execution-record.json",
+        "examples/sample-playwright-mcp-execution-record.json",
+        "examples/sample-browser-tools-mcp-execution-record.json",
+        "references/external-skill-comparison-2026-06-04.md"
+      ]
+    },
+    {
+      "id": "external_regression_matrix",
+      "label": "External regression matrix",
+      "weight": 10,
+      "evidence": [
+        "assets/external-skill-regression-model.json",
+        "scripts/compare_external_skill_matrix.js",
+        "references/external-skill-comparison-2026-06-04.md",
+        "assets/public-benchmark-cases.json"
+      ]
+    },
+    {
+      "id": "battle_tested_outcomes",
+      "label": "Battle-tested outcomes (solve-rate telemetry)",
+      "weight": 20,
+      "evidence": [
+        "assets/pattern-outcome-stats.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/test-env-diagnose.js && node tests/test-runtime-contracts.js"
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frida TLS Pinning"
+  short_description: "Analyze and bypass app TLS pinning"
+  default_prompt: "Use $frida-tls-pinning to identify and hook the TLS pinning path for this app."

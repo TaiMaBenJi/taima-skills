@@ -1,0 +1,77 @@
+{
+  "$schema": "DeepExtractIDA Agent Registry v1",
+  "$description": "Machine-readable contracts for all subagents. Used by inject-module-context.py to enrich AI session context and enable intelligent agent routing.",
+  "agents": {
+    "re-analyst": {
+      "purpose": "Explain and analyze decompiled functions using IDA domain knowledge",
+      "type": "analyst",
+      "entry_scripts": [
+        {"script": "re_query.py", "accepts": {"db_path": "required", "--overview": "flag", "--function": "optional", "--class": "optional", "--exports": "flag", "--search": "optional", "--context": "flag", "--with-classification": "flag", "--id": "optional", "--json": "flag"}},
+        {"script": "explain_function.py", "accepts": {"db_path": "required", "function_name": "optional", "--id": "optional", "--depth": "optional", "--no-assembly": "flag", "--json": "flag"}}
+      ],
+      "skills_used": ["classify-functions", "generate-re-report", "decompiled-code-extractor", "callgraph-tracer"],
+      "json_output": true
+    },
+    "triage-coordinator": {
+      "purpose": "Orchestrate multi-skill analysis workflows for comprehensive module analysis",
+      "type": "coordinator",
+      "entry_scripts": [
+        {"script": "analyze_module.py", "accepts": {"db_path": "required", "--goal": "required", "--function": "optional", "--json": "flag", "--timeout": "optional", "--workspace-run-dir": "optional"}},
+        {"script": "generate_analysis_plan.py", "accepts": {"db_path": "required", "--goal": "required", "--function": "optional", "--json": "flag"}}
+      ],
+      "skills_used": ["classify-functions", "map-attack-surface", "callgraph-tracer", "security-dossier", "generate-re-report", "reconstruct-types", "com-interface-reconstruction", "decompiled-code-extractor", "import-export-resolver", "batch-lift"],
+      "json_output": true
+    },
+    "code-lifter": {
+      "purpose": "Lift related function groups with shared struct context across methods",
+      "type": "lifter",
+      "entry_scripts": [
+        {"script": "batch_extract.py", "accepts": {"db_path": "required", "--class": "optional", "--functions": "optional", "--id-list": "optional", "--init-state": "flag", "--summary": "flag", "--json": "flag"}},
+        {"script": "track_shared_state.py", "accepts": {"--dump": "flag", "--list": "flag", "--record-field": "optional", "--record-constant": "optional", "--record-naming": "optional", "--mark-lifted": "optional", "--record-signature": "optional", "--init": "optional", "--reset": "optional", "--class": "optional", "--source": "optional", "--asm-verified": "flag", "--json": "flag"}}
+      ],
+      "skills_used": ["decompiled-code-extractor", "batch-lift", "reconstruct-types", "function-index"],
+      "json_output": true
+    },
+    "type-reconstructor": {
+      "purpose": "Reconstruct C/C++ struct and class definitions from memory access patterns",
+      "type": "reconstructor",
+      "entry_scripts": [
+        {"script": "reconstruct_all.py", "accepts": {"db_path": "required", "--class": "optional", "--output": "optional", "--include-com": "flag", "--json": "flag"}},
+        {"script": "merge_evidence.py", "accepts": {"--scan-output": "required", "--com-data": "optional", "--class": "optional", "--json": "flag", "--output": "optional"}},
+        {"script": "validate_layout.py", "accepts": {"db_path": "required", "--header": "required", "--class": "optional", "--json": "flag"}}
+      ],
+      "skills_used": ["decompiled-code-extractor", "reconstruct-types", "com-interface-reconstruction"],
+      "json_output": true
+    },
+    "security-auditor": {
+      "purpose": "Dedicated security assessment: vulnerability scanning, exploitability analysis, and finding verification",
+      "type": "analyst",
+      "entry_scripts": [
+        {"script": "run_security_scan.py", "accepts": {"db_path": "required", "--goal": "optional", "--function": "optional", "--top": "optional", "--json": "flag", "--timeout": "optional", "--workspace-run-dir": "optional", "--max-workers": "optional", "--no-cache": "flag"}}
+      ],
+      "skills_used": ["decompiled-code-extractor", "classify-functions", "map-attack-surface", "security-dossier", "ai-memory-corruption-scanner", "ai-logic-scanner", "ai-taint-scanner"],
+      "json_output": true
+    },
+    "memory-corruption-scanner": {
+      "purpose": "AI-driven memory corruption vulnerability scanner with callgraph navigation and adversarial prompting",
+      "type": "analyst",
+      "entry_scripts": [],
+      "skills_used": ["ai-memory-corruption-scanner", "decompiled-code-extractor", "map-attack-surface"],
+      "json_output": true
+    },
+    "logic-scanner": {
+      "purpose": "AI-driven logic vulnerability scanner",
+      "type": "analyst",
+      "entry_scripts": [],
+      "skills_used": ["ai-logic-scanner", "decompiled-code-extractor", "map-attack-surface"],
+      "json_output": true
+    },
+    "taint-scanner": {
+      "purpose": "AI-driven taint analysis scanner with cross-module data flow tracing, trust boundary analysis, and skeptic verification",
+      "type": "analyst",
+      "entry_scripts": [],
+      "skills_used": ["ai-taint-scanner", "decompiled-code-extractor", "map-attack-surface"],
+      "json_output": true
+    }
+  }
+}

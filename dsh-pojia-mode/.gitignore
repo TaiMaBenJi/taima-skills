@@ -1,0 +1,16 @@
+# 本地/临时产物
+dist/
+*.bak
+*.bak-*
+_uninstalled-*
+_extracted-*
+_real-check-output.txt
+
+# Python
+__pycache__/
+*.pyc
+
+# 编辑器
+.vscode/
+.idea/
+*.swp

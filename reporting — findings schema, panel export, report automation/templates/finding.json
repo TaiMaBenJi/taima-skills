@@ -1,0 +1,21 @@
+{
+  "id": "HIG-001",
+  "title": "Short, client-readable title (e.g. Rate limit bypass via X-Forwarded-For spoofing)",
+  "case": "client-engagement-2026",
+  "severity": "high",
+  "cvss": 7.4,
+  "status": "confirmed",
+  "category": "rate-limit",
+  "cwe": "CWE-307",
+  "owasp": "A07:2021 Identification and Authentication Failures",
+  "attack": ["T1110.001"],
+  "target": { "host": "example.com", "url": "https://example.com/api/login" },
+  "evidence": [
+    { "kind": "request", "ref": "evidence/req-001.txt", "note": "429 without XFF" },
+    { "kind": "response", "ref": "evidence/resp-002.txt", "note": "200 with rotated XFF" }
+  ],
+  "poc": "curl -s -o /dev/null -w '%{http_code}\\n' -H 'X-Forwarded-For: 10.0.0.123' -X POST https://example.com/api/login -d '{...}'",
+  "remediation": "Trust XFF only from the edge proxy (real_ip + whitelist); rate-limit on account+device, not just IP.",
+  "references": ["https://cwe.mitre.org/data/definitions/307.html"],
+  "discovered": "2026-08-03"
+}

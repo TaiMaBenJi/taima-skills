@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frida Native Hooks"
+  short_description: "Build native Frida hooks safely"
+  default_prompt: "Use $frida-native-hooks to hook native functions with Frida."

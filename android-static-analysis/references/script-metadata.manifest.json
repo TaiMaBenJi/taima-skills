@@ -1,0 +1,271 @@
+{
+  "schemaVersion": "1.0.0",
+  "skill": "android-static-analysis",
+  "generatedAt": "2026-05-08",
+  "notes": [
+    "canonical=true marks preferred entry scripts for static-analysis workflow routing.",
+    "Use canonicalProfiles for deterministic flag presets instead of improvising command options.",
+    "Prefer apk-* wrappers when available; direct script paths are fallback equivalents."
+  ],
+  "routingRules": [
+    {
+      "id": "route.deps.verify",
+      "intents": [
+        "check dependencies",
+        "verify toolchain",
+        "missing jadx/java"
+      ],
+      "preferred": "static.deps.check",
+      "fallback": [
+        "static.deps.install"
+      ]
+    },
+    {
+      "id": "route.deps.install",
+      "intents": [
+        "install dependency",
+        "install jadx",
+        "install vineflower",
+        "install dex2jar"
+      ],
+      "preferred": "static.deps.install",
+      "fallback": [
+        "static.deps.check"
+      ]
+    },
+    {
+      "id": "route.decompile.apk.firstpass",
+      "intents": [
+        "decompile apk",
+        "reverse engineer apk",
+        "xapk analysis"
+      ],
+      "fileTypes": [
+        "apk",
+        "xapk"
+      ],
+      "preferred": "static.decompile.jadx",
+      "fallback": [
+        "static.decompile.both",
+        "static.decompile.fernflower"
+      ]
+    },
+    {
+      "id": "route.decompile.jar.aar",
+      "intents": [
+        "decompile jar",
+        "decompile aar",
+        "analyze library"
+      ],
+      "fileTypes": [
+        "jar",
+        "aar"
+      ],
+      "preferred": "static.decompile.fernflower",
+      "fallback": [
+        "static.decompile.jadx",
+        "static.decompile.both"
+      ]
+    },
+    {
+      "id": "route.decompile.compare",
+      "intents": [
+        "compare decompilers",
+        "jadx warnings",
+        "broken ast"
+      ],
+      "preferred": "static.decompile.both",
+      "fallback": [
+        "static.decompile.fernflower"
+      ]
+    },
+    {
+      "id": "route.api.extract.all",
+      "intents": [
+        "extract apis",
+        "find endpoints",
+        "api inventory"
+      ],
+      "preferred": "static.api.find.all",
+      "fallback": [
+        "static.api.find.retrofit",
+        "static.api.find.urls",
+        "static.api.find.auth"
+      ]
+    },
+    {
+      "id": "route.api.extract.retrofit",
+      "intents": [
+        "find retrofit endpoints",
+        "retrofit interfaces"
+      ],
+      "preferred": "static.api.find.retrofit",
+      "fallback": [
+        "static.api.find.all"
+      ]
+    },
+    {
+      "id": "route.api.extract.auth",
+      "intents": [
+        "find auth headers",
+        "find tokens",
+        "api keys"
+      ],
+      "preferred": "static.api.find.auth",
+      "fallback": [
+        "static.api.find.all"
+      ]
+    }
+  ],
+  "canonicalProfiles": [
+    {
+      "id": "static.decompile.jadx",
+      "scriptId": "static.decompile",
+      "wrapperCommand": "apk-decompile --engine jadx <file>",
+      "directCommand": "scripts/decompile.sh --engine jadx <file>",
+      "useWhen": [
+        "first pass on APK/XAPK",
+        "resource decoding required",
+        "fast overview"
+      ]
+    },
+    {
+      "id": "static.decompile.fernflower",
+      "scriptId": "static.decompile",
+      "wrapperCommand": "apk-decompile --engine fernflower <file>",
+      "directCommand": "scripts/decompile.sh --engine fernflower <file>",
+      "useWhen": [
+        "JAR/AAR analysis",
+        "complex lambdas/generics",
+        "jadx output degraded on specific classes"
+      ]
+    },
+    {
+      "id": "static.decompile.both",
+      "scriptId": "static.decompile",
+      "wrapperCommand": "apk-decompile --engine both <file>",
+      "directCommand": "scripts/decompile.sh --engine both <file>",
+      "useWhen": [
+        "need side-by-side comparison",
+        "jadx warnings/errors present",
+        "high-confidence reconstruction"
+      ]
+    },
+    {
+      "id": "static.api.find.all",
+      "scriptId": "static.api.find",
+      "wrapperCommand": "apk-find-apis <sources-dir>",
+      "directCommand": "scripts/find-api-calls.sh <sources-dir> --all",
+      "useWhen": [
+        "full API extraction sweep"
+      ]
+    },
+    {
+      "id": "static.api.find.retrofit",
+      "scriptId": "static.api.find",
+      "wrapperCommand": "apk-find-apis <sources-dir> --retrofit",
+      "directCommand": "scripts/find-api-calls.sh <sources-dir> --retrofit",
+      "useWhen": [
+        "Retrofit-focused endpoint extraction"
+      ]
+    },
+    {
+      "id": "static.api.find.urls",
+      "scriptId": "static.api.find",
+      "wrapperCommand": "apk-find-apis <sources-dir> --urls",
+      "directCommand": "scripts/find-api-calls.sh <sources-dir> --urls",
+      "useWhen": [
+        "hardcoded URL discovery"
+      ]
+    },
+    {
+      "id": "static.api.find.auth",
+      "scriptId": "static.api.find",
+      "wrapperCommand": "apk-find-apis <sources-dir> --auth",
+      "directCommand": "scripts/find-api-calls.sh <sources-dir> --auth",
+      "useWhen": [
+        "auth/token/header extraction"
+      ]
+    },
+    {
+      "id": "static.deps.check",
+      "scriptId": "static.deps.check",
+      "wrapperCommand": "apk-check-deps",
+      "directCommand": "scripts/check-deps.sh",
+      "useWhen": [
+        "environment readiness verification"
+      ]
+    },
+    {
+      "id": "static.deps.install",
+      "scriptId": "static.deps.install",
+      "wrapperCommand": "apk-install-dep <name>",
+      "directCommand": "scripts/install-dep.sh <name>",
+      "useWhen": [
+        "install missing required or optional tools"
+      ]
+    }
+  ],
+  "scripts": [
+    {
+      "id": "static.deps.check",
+      "path": "scripts/check-deps.sh",
+      "canonical": true,
+      "platform": "android",
+      "family": "dependency",
+      "category": "setup",
+      "entrypoint": "bash scripts/check-deps.sh",
+      "wrapperCommand": "apk-check-deps",
+      "qualityHints": {
+        "strictShell": true,
+        "machineReadableOutput": true,
+        "exitCodesDocumented": true
+      }
+    },
+    {
+      "id": "static.deps.install",
+      "path": "scripts/install-dep.sh",
+      "canonical": true,
+      "platform": "android",
+      "family": "dependency",
+      "category": "setup",
+      "entrypoint": "bash scripts/install-dep.sh <dependency>",
+      "wrapperCommand": "apk-install-dep <dependency>",
+      "qualityHints": {
+        "strictShell": true,
+        "machineReadableOutput": false,
+        "exitCodesDocumented": true
+      }
+    },
+    {
+      "id": "static.decompile",
+      "path": "scripts/decompile.sh",
+      "canonical": true,
+      "platform": "android",
+      "family": "decompile",
+      "category": "core",
+      "entrypoint": "bash scripts/decompile.sh [OPTIONS] <file>",
+      "wrapperCommand": "apk-decompile [OPTIONS] <file>",
+      "qualityHints": {
+        "strictShell": true,
+        "supportsXapk": true,
+        "supportsEngineCompare": true
+      }
+    },
+    {
+      "id": "static.api.find",
+      "path": "scripts/find-api-calls.sh",
+      "canonical": true,
+      "platform": "android",
+      "family": "analysis",
+      "category": "api-extraction",
+      "entrypoint": "bash scripts/find-api-calls.sh <source-dir> [OPTIONS]",
+      "wrapperCommand": "apk-find-apis <source-dir> [OPTIONS]",
+      "qualityHints": {
+        "strictShell": true,
+        "supportsTargetedModes": true,
+        "machineReadableOutput": false
+      }
+    }
+  ]
+}

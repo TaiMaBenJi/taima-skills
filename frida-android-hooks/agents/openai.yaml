@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frida Android Hooks"
+  short_description: "Instrument Android apps with Frida"
+  default_prompt: "Use $frida-android-hooks to inspect and hook an Android app."

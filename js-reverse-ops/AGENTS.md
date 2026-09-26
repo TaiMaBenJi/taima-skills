@@ -1,0 +1,134 @@
+# AGENTS.md
+
+This repository is designed to be understandable by coding agents and automation-oriented assistants.
+
+## Primary Goal
+
+Use `js-reverse-ops` as a structured reverse-engineering workflow for JavaScript-heavy browser targets.
+
+The repository is optimized for:
+
+- locating the real protected request
+- collecting runtime truth before over-committing to static guesses
+- recovering packed or VM-like logic into readable artifacts
+- exporting replay-oriented outputs for Node or Python
+
+## First Files To Read
+
+When you are new to the repository, read in this order:
+
+1. `README.md`
+2. `SKILL.md`
+3. `AI_USAGE.md`
+4. `repo-map.json`
+5. `references/task-types.md`
+6. `references/stages/locate.md`
+7. `references/stages/runtime.md`
+8. `references/stages/recover.md`
+9. `references/stages/replay.md`
+
+## Fast Entry By Task
+
+- local JS or bundle:
+  start with `scripts/triage_js.sh`, `scripts/extract_iocs.js`, `scripts/extract_request_contract.js`
+- HTML page:
+  start with `scripts/profile_page_family.js`, `scripts/extract_page_contract.js`
+- browser-backed target:
+  verify environment with `scripts/check_js_reverse_ops_deps.py`, `scripts/start_debug_browser.sh`, `scripts/check_debug_browser.sh`
+<!-- BEGIN PLAYBOOK_FAST_ENTRY -->
+- accepted response but confusing browser-visible values:
+  inspect page-side post-response render logic before assuming the transport or signer is still wrong, then read `playbooks/accepted-response-hidden-dom.md`
+- accepted response plus page-local embedded font:
+  inspect the accepted payload for `woff` or other embedded font blobs, enumerate unique glyphs, and read `playbooks/embedded-runtime-font-mapping.md` before trying row-level OCR or signer recovery
+- accepted digest exists but replay still fails without one extra cookie:
+  inspect bootstrap-time cookie writes and wrapped-cookie assembly before blaming headers or transport, then read `playbooks/bootstrap-digest-ladder.md`
+- one endpoint returns script first and data only after one local cookie write or field update:
+  model it as a same-endpoint iterative warmup chain before inventing a second hidden endpoint, then read `playbooks/iterative-script-warmup-same-endpoint.md`
+- signer depends on one server-issued time value and one wasm or module helper:
+  freeze the time source and signer input shape before touching replay, then read `playbooks/server-time-gated-wasm-signer.md`
+- one digest helper has a familiar name such as `sm3Digest` or `md5`, but browser output diverges from the standard library:
+  isolate the smallest patch surface in the local runtime before emulating more of the page, then read `playbooks/patched-runtime-digest-branch.md`
+- one large bundle hides a tiny runtime helper you actually need for replay:
+  extract the minimum helper instead of emulating the whole page, then read `playbooks/runtime-bundle-signer-extraction.md`
+- global token helpers are missing or misleading, but XHR.open rewrites the protected URL:
+  hook `XMLHttpRequest.prototype.open`, preserve script order, and extract the signer from the rewritten URL before rebuilding Python replay, then read `playbooks/xhr-open-url-rewrite-runtime-replay.md`
+- visible request contract is stable but some clients still fail:
+  escalate transport stacks before inventing more signer fields, then read `playbooks/transport-profile-ladder.md`
+- verify endpoint looks noisy or pessimistic while data requests still succeed:
+  treat the data endpoint as the acceptance oracle until proven otherwise, then read `playbooks/lenient-verify-data-gate.md`
+- page exposes one simple request or one helper field, but later pages fail with a token-shaped gate:
+  prove whether the visible request is only a decoy before widening into full VM recovery, then read `playbooks/decoy-page-request-hidden-token-gate.md`
+- one challenge image is a fixed small grid and the target is selecting visible glyphs or symbols:
+  crop the grid, solve target-to-cell assignment, and read `playbooks/grid-challenge-template-matching.md`
+- fresh reload is required, the first signer must be proved against one live baseline sample, and later ciphertexts use previous-stage outputs as keys:
+  validate the seeded signer first, then read `playbooks/fresh-reload-seeded-signer-step-key-ladder.md`
+- one replay path works for round one, but later rounds only regain parity after prior-round replay:
+  preserve the same-page round ladder before rewriting downstream crypto, then read `playbooks/same-page-prior-round-signer-replay.md`
+- desktop HTML intermittently falls into verification, but a mobile or app request profile lands on a shell page:
+  pivot through the shell runtime, recover route chunks and the request wrapper, then read `playbooks/mobile-shell-api-pivot.md`
+- sandbox tokens rejected while browser tokens pass for identical inputs:
+  bisect source, tables, behavior, and encoder inputs across environments before adding sandbox shims, then read `playbooks/env-gated-crypto-differential.md`
+- token changes every call and replay of a captured URL still works:
+  probe replay tolerance first, then drive the browser across pages instead of recovering the VM, then read `playbooks/browser-assisted-token-replay.md`
+- VM-protected signer needs a browser-free local oracle:
+  run the page natively in a DOM implementation and diff instruction and constant streams, then read `playbooks/jsdom-native-vm-differential.md`
+- token expires within seconds of generation:
+  proxy the real request from inside the harness interceptor with zero delay, then read `playbooks/short-ttl-inline-proxy.md`
+<!-- END PLAYBOOK_FAST_ENTRY -->
+- packed or VM-like code:
+  prefer `Recover` stage references and do not jump directly into replay
+- replay delivery:
+  use `references/signature-delivery.md` and output scaffold or bundle artifacts
+
+## Working Style
+
+- prefer runtime evidence over plausible static interpretation
+- prefer artifact generation over chat-only conclusions
+- prefer the smallest stage-appropriate script rather than broad tool usage
+- preserve clear boundaries between verified facts and inferred conclusions
+- if the page hides one DOM layer or visibly reorders inline elements after the response arrives, treat that as a presentation-decode problem, not as proof that the request contract is incomplete
+- if one accepted page ships a new embedded font, treat the glyph map as page-local until you prove otherwise
+
+## Repository Boundaries
+
+This public repository intentionally excludes:
+
+- private fixtures
+- target-specific case notes
+- credentials, cookies, sessions, live captures
+- site-specific replay material
+
+Do not reintroduce target-specific material when extending the public repository.
+
+## Sample Inputs
+
+If you need a harmless dry run target, use files under `examples/`.
+
+## Development loop (make check mirrors CI)
+
+```bash
+make check          # everything CI runs: benchmarks, trigger evals, syntax, release checks
+make benchmarks     # 49 public regression cases
+make trigger-evals  # description-trigger lexical smoke (24 cases)
+make syntax         # node --check over all scripts
+make validate       # public release check
+```
+
+If `make check` passes locally but CI fails, that is a bug in the Makefile —
+fix it there rather than working around it, or the local signal stops being
+trustworthy.
+
+## Authoring conventions
+
+- official references first: [Claude Code Plugins](https://code.claude.com/docs/en/plugins),
+  [Agent Skills](https://code.claude.com/docs/en/skills),
+  [Skill Authoring Best Practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
+- complexity ladder to learn from (external): trailofbits git-cleanup (basic),
+  constant-time-analysis (intermediate), culture-index (advanced)
+- one capability per reference file; SKILL.md routes, references teach
+- every new script gets a row in `references/scripts-catalog.md`
+- claims carry evidence labels (`verified-live` / `verified-local` / `inferred`)
+- sanitized language only: no site names, credentials, or captured fixtures in
+  the public tree (the export scan enforces this; see PUBLISHING.md)
+- record pattern outcomes with `scripts/update_pattern_index_stats.js` after
+  solving or failing a real target — ranking weights evolve from that telemetry

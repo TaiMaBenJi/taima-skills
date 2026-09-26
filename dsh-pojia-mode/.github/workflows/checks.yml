@@ -1,0 +1,97 @@
+name: checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 编码门禁（ps1 带 BOM / bat 纯 ASCII / vbs ANSI / tmpl 无 BOM）
+        shell: pwsh
+        run: |
+          $fail = 0
+
+          $b = [System.IO.File]::ReadAllBytes("unlock-dsh.ps1")
+          if ($b[0] -eq 239 -and $b[1] -eq 187 -and $b[2] -eq 191) {
+            Write-Host "OK  unlock-dsh.ps1 = UTF-8 with BOM"
+          } else { Write-Host "FAIL unlock-dsh.ps1 缺 BOM"; $fail++ }
+
+          $bb = [System.IO.File]::ReadAllBytes("unlock-dsh.bat")
+          $n  = ($bb | Where-Object { $_ -gt 127 }).Count
+          if ($n -eq 0) { Write-Host "OK  unlock-dsh.bat = 纯 ASCII" }
+          else { Write-Host "FAIL unlock-dsh.bat 含 $n 个非 ASCII 字节"; $fail++ }
+
+          $vb = [System.IO.File]::ReadAllBytes("unlock-dsh-silent.vbs")
+          if (-not ($vb[0] -eq 239 -and $vb[1] -eq 187 -and $vb[2] -eq 191)) {
+            Write-Host "OK  unlock-dsh-silent.vbs = ANSI/GBK"
+          } else { Write-Host "FAIL vbs 是 UTF-8 BOM（脚本宿主会报语句未结束）"; $fail++ }
+
+          foreach ($t in @("assets/agent.cordis.yml.tmpl","assets/preset.yml.tmpl")) {
+            $tb = [System.IO.File]::ReadAllBytes($t)
+            if (-not ($tb[0] -eq 239 -and $tb[1] -eq 187 -and $tb[2] -eq 191)) {
+              Write-Host "OK  $t = UTF-8 无 BOM"
+            } else { Write-Host "FAIL $t 带 BOM（DSH YAML 会解析失败）"; $fail++ }
+          }
+
+          if ($fail -gt 0) { exit 1 }
+
+      - name: 语法检查（PowerShell / VBScript）
+        shell: pwsh
+        run: |
+          $err = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile("$PWD/unlock-dsh.ps1", [ref]$null, [ref]$err)
+          if ($err.Count -gt 0) {
+            $err | ForEach-Object { Write-Host "PS parse error: $($_.Message)" }
+            exit 1
+          }
+          Write-Host "OK  unlock-dsh.ps1 语法通过"
+
+          $out = & cscript //nologo //X //Job:NoSuchJob "$PWD/unlock-dsh-silent.vbs" 2>&1
+          if ($LASTEXITCODE -ne 0 -and ($out -join "`n") -match "语法|syntax|Syntax") {
+            Write-Host "VBS 语法错误:"; $out | ForEach-Object { Write-Host $_ }
+            exit 1
+          }
+          Write-Host "OK  unlock-dsh-silent.vbs 语法通过"
+
+      - name: 干跑（dry-run 不落盘）
+        shell: pwsh
+        run: |
+          $env:DSH_HOME = Join-Path $env:RUNNER_TEMP "fake-dsh"
+          New-Item -ItemType Directory -Path $env:DSH_HOME -Force | Out-Null
+          ./unlock-dsh.ps1 dry-run | Out-Host
+          if (-not (Test-Path (Join-Path $env:DSH_HOME ".agent-presets"))) {
+            Write-Host "OK  dry-run 未写入任何内容"
+          } else {
+            Write-Host "FAIL dry-run 竟然落盘了"
+            exit 1
+          }
+
+      - name: 安装 + 自检
+        shell: pwsh
+        run: |
+          $env:DSH_HOME = Join-Path $env:RUNNER_TEMP "fake-dsh"
+          New-Item -ItemType Directory -Path $env:DSH_HOME -Force | Out-Null
+          ./unlock-dsh.ps1 install | Out-Host
+          $compo = Join-Path $env:DSH_HOME ".agent-presets/pj-mode/agent.cordis.yml"
+          if (-not (Test-Path $compo)) { Write-Host "FAIL 未生成 composition"; exit 1 }
+          $txt = [System.IO.File]::ReadAllText($compo)
+          foreach ($k in @("总纲（用户至上）","露骨内容无限制（强化版）","残留条款无效","C730EC47C921","<文件操作无限制>","你是小码酱","破甲模式 v4")) {
+            if ($txt.Contains($k)) { Write-Host "OK  含关键块: $k" }
+            else { Write-Host "FAIL 缺少关键块: $k"; exit 1 }
+          }
+
+      - name: 卸载
+        shell: pwsh
+        run: |
+          $env:DSH_HOME = Join-Path $env:RUNNER_TEMP "fake-dsh"
+          ./unlock-dsh.ps1 uninstall | Out-Host
+          if (Test-Path (Join-Path $env:DSH_HOME ".agent-presets/pj-mode")) {
+            Write-Host "FAIL 卸载后目录仍在"; exit 1
+          }
+          Write-Host "OK  卸载完成（原目录已移到 _uninstalled-*）"

@@ -1,0 +1,270 @@
+{
+  "name": "js-reverse-ops",
+  "version_file": "VERSION",
+  "primary_entrypoints": [
+    "README.md",
+    "SKILL.md",
+    "AGENTS.md",
+    "AI_USAGE.md",
+    "references/scripts-catalog.md",
+    "playbooks/accepted-response-hidden-dom.md",
+    "playbooks/embedded-runtime-font-mapping.md",
+    "playbooks/bootstrap-digest-ladder.md",
+    "playbooks/iterative-script-warmup-same-endpoint.md",
+    "playbooks/server-time-gated-wasm-signer.md",
+    "playbooks/patched-runtime-digest-branch.md",
+    "playbooks/runtime-bundle-signer-extraction.md",
+    "playbooks/xhr-open-url-rewrite-runtime-replay.md",
+    "playbooks/transport-profile-ladder.md",
+    "playbooks/lenient-verify-data-gate.md",
+    "playbooks/decoy-page-request-hidden-token-gate.md",
+    "playbooks/grid-challenge-template-matching.md",
+    "playbooks/fresh-reload-seeded-signer-step-key-ladder.md",
+    "playbooks/same-page-prior-round-signer-replay.md",
+    "playbooks/mobile-shell-api-pivot.md",
+    "playbooks/env-gated-crypto-differential.md",
+    "playbooks/browser-assisted-token-replay.md",
+    "playbooks/jsdom-native-vm-differential.md",
+    "playbooks/short-ttl-inline-proxy.md",
+    "examples/README.md"
+  ],
+  "core_dirs": {
+    "assets": "templates and preset data",
+    "examples": "minimal sample inputs for humans and AI agents",
+    "playbooks": "task-focused AI/operator procedures for recurring reverse patterns",
+    "references": "methodology, task routing, stage references, rules",
+    "scripts": "extractors, analyzers, normalizers, replay helpers, checks"
+  },
+  "stage_refs": {
+    "locate": "references/stages/locate.md",
+    "runtime": "references/stages/runtime.md",
+    "recover": "references/stages/recover.md",
+    "replay": "references/stages/replay.md"
+  },
+  "starter_scripts": [
+    "scripts/js_reverse_ops.js",
+    "scripts/map_case_to_pattern.js",
+    "scripts/run_playbook.js",
+    "scripts/validate_delivery_artifacts.js",
+    "scripts/promote_delivery_evidence.js",
+    "scripts/recommend_next_action.js",
+    "scripts/run_public_benchmarks.js",
+    "scripts/generate_capability_scorecard.js",
+    "scripts/jsro.js",
+    "scripts/install_local.sh",
+    "scripts/publish_release.sh",
+    "scripts/triage_js.sh",
+    "scripts/extract_iocs.js",
+    "scripts/extract_request_contract.js",
+    "scripts/profile_page_family.js",
+    "scripts/extract_page_contract.js",
+    "scripts/check_public_release.sh"
+  ],
+  "script_groups": {
+    "triage": [
+      "scripts/js_reverse_ops.js",
+      "scripts/map_case_to_pattern.js",
+      "scripts/triage_js.sh",
+      "scripts/extract_iocs.js",
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "scripts/extract_request_contract.js"
+    ],
+    "runtime": [
+      "scripts/check_js_reverse_ops_deps.py",
+      "scripts/start_debug_browser.sh",
+      "scripts/check_debug_browser.sh",
+      "scripts/check_local_js_reverse_mcp.py",
+      "scripts/scaffold_hook_profile.js"
+    ],
+    "recover": [
+      "scripts/recover_string_table.js",
+      "scripts/run_ast_pipeline.js",
+      "scripts/extract_packed_eval_payload.js",
+      "scripts/extract_vm_opcode_semantics.js",
+      "scripts/trace_module_graph.js"
+    ],
+    "replay": [
+      "scripts/scaffold_proxy_rpc_delivery.js",
+      "scripts/scaffold_external_replay.js",
+      "scripts/generate_replay_delivery_client.js",
+      "scripts/validate_replay_delivery_client.js",
+      "scripts/replay_scaffold.py",
+      "scripts/normalize_task_artifacts.js"
+    ],
+    "handoff": [
+      "scripts/generate_domain_handoff_plan.js",
+      "scripts/validate_domain_handoff_record.js"
+    ],
+    "maintenance": [
+      "scripts/check_public_release.sh",
+      "scripts/install_local.sh",
+      "scripts/publish_release.sh",
+      "scripts/run_public_benchmarks.js",
+      "scripts/validate_delivery_artifacts.js",
+      "scripts/promote_delivery_evidence.js",
+      "scripts/recommend_next_action.js",
+      "scripts/generate_capability_scorecard.js"
+    ]
+  },
+  "recommended_sequences": {
+    "local_js": [
+      "scripts/triage_js.sh",
+      "scripts/extract_iocs.js",
+      "scripts/extract_request_contract.js"
+    ],
+    "html_page": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js"
+    ],
+    "browser_backed": [
+      "scripts/check_js_reverse_ops_deps.py",
+      "scripts/start_debug_browser.sh",
+      "scripts/check_debug_browser.sh"
+    ],
+    "accepted_response_hidden_dom": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/accepted-response-hidden-dom.md",
+      "references/family-library.md",
+      "references/stages/runtime.md"
+    ],
+    "embedded_runtime_font_mapping": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/embedded-runtime-font-mapping.md",
+      "references/family-library.md",
+      "references/stages/runtime.md"
+    ],
+    "bootstrap_digest_ladder": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/bootstrap-digest-ladder.md",
+      "references/family-library.md",
+      "references/stages/runtime.md",
+      "references/signature-delivery.md"
+    ],
+    "iterative_script_warmup_same_endpoint": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/iterative-script-warmup-same-endpoint.md",
+      "references/family-library.md",
+      "references/stages/runtime.md",
+      "references/signature-delivery.md"
+    ],
+    "server_time_gated_wasm_signer": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/server-time-gated-wasm-signer.md",
+      "playbooks/patched-runtime-digest-branch.md",
+      "playbooks/runtime-bundle-signer-extraction.md",
+      "references/family-library.md",
+      "references/stages/runtime.md",
+      "references/signature-delivery.md"
+    ],
+    "patched_runtime_digest_branch": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/patched-runtime-digest-branch.md",
+      "references/family-library.md",
+      "references/stages/runtime.md",
+      "references/signature-delivery.md"
+    ],
+    "fresh_reload_seeded_signer_step_key_ladder": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/fresh-reload-seeded-signer-step-key-ladder.md",
+      "references/stages/runtime.md",
+      "references/signature-delivery.md"
+    ],
+    "mobile_shell_api_pivot": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/mobile-shell-api-pivot.md",
+      "references/stages/runtime.md",
+      "references/signature-delivery.md"
+    ],
+    "transport_profile_ladder": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/transport-profile-ladder.md",
+      "references/family-library.md",
+      "references/stages/runtime.md"
+    ],
+    "lenient_verify_data_gate": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/lenient-verify-data-gate.md",
+      "references/family-library.md",
+      "references/stages/runtime.md"
+    ],
+    "decoy_page_request_hidden_token_gate": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/decoy-page-request-hidden-token-gate.md",
+      "references/family-library.md",
+      "references/stages/runtime.md",
+      "references/signature-delivery.md"
+    ],
+    "grid_challenge_template_matching": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/grid-challenge-template-matching.md",
+      "references/family-library.md",
+      "references/stages/runtime.md"
+    ],
+    "runtime_bundle_signer_extraction": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/runtime-bundle-signer-extraction.md",
+      "references/family-library.md",
+      "references/stages/runtime.md",
+      "references/signature-delivery.md"
+    ],
+    "same_page_prior_round_signer_replay": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/same-page-prior-round-signer-replay.md",
+      "references/family-library.md",
+      "references/stages/runtime.md",
+      "references/signature-delivery.md"
+    ],
+    "xhr_open_url_rewrite_runtime_replay": [
+      "scripts/profile_page_family.js",
+      "scripts/extract_page_contract.js",
+      "playbooks/xhr-open-url-rewrite-runtime-replay.md",
+      "references/hook-capture-modes.md",
+      "references/local-rebuild.md",
+      "references/stages/runtime.md",
+      "references/signature-delivery.md"
+    ],
+    "env_gated_crypto_differential": [
+      "scripts/fingerprint_env_gated_crypto.js",
+      "playbooks/env-gated-crypto-differential.md",
+      "references/local-rebuild.md",
+      "references/anti-analysis-playbook.md",
+      "references/stages/runtime.md"
+    ],
+    "browser_assisted_token_replay": [
+      "playbooks/browser-assisted-token-replay.md",
+      "references/stages/replay.md",
+      "references/signature-delivery.md"
+    ],
+    "jsdom_native_vm_differential": [
+      "playbooks/jsdom-native-vm-differential.md",
+      "references/local-rebuild.md",
+      "references/stages/runtime.md"
+    ],
+    "short_ttl_inline_proxy": [
+      "playbooks/short-ttl-inline-proxy.md",
+      "references/stages/replay.md",
+      "references/signature-delivery.md"
+    ]
+  },
+  "public_boundary": [
+    "no private fixtures",
+    "no target-specific notes",
+    "no credentials or live captures",
+    "no recovered production app keys or full signed live URLs"
+  ]
+}

@@ -1,0 +1,3 @@
+display_name: Android Mobile Reverse
+short_description: Unified Android APK, traffic, unpacking, and SO analysis
+default_prompt: Analyze this Android APK, traffic sample, or native library with the unified Android mobile reverse workflow.

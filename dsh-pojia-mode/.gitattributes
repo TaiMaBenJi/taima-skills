@@ -1,0 +1,10 @@
+﻿# 统一换行，避免 Windows/Linux 检出差异导致 SHA256 对不上
+* text=auto eol=lf
+
+# 二进制/敏感编码文件：绝不转换
+*.png  binary
+*.zip  binary
+*.ps1  -text
+*.bat  -text
+*.vbs  -text
+*.tmpl -text

@@ -1,0 +1,9 @@
+{
+  "name": "js-deobfuscate-runtime",
+  "private": true,
+  "description": "Local runtime for the js-deobfuscate skill (webcrack and its isolated-vm prebuilds).",
+  "type": "module",
+  "dependencies": {
+    "webcrack": "2.16.0"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "scope": "Example primitive regression only; not an end-to-end a_bogus proof",
+    "bdms_style": "1.0.1.19",
+    "standard_vector": "SM3 abc is the published standard vector",
+    "private_vectors": "Frozen from the bundled primitive implementation to detect local drift; they do not prove protocol correctness"
+  },
+  "alphabets": {
+    "base": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-/",
+    "abogus": "Dkdpgh2ZmsQB80/MfvV36XI1R45-WUAlEixNLwoqYTOPuzKFjJnry79HbGcaStCe",
+    "sign": "ckdp1h4ZKsUB80/Mfvw36XIgR25+WQAlEi7NLboqYTOPuzmFjJnryx9HVGDaStCe"
+  },
+  "sm3": [
+    {
+      "name": "standard-abc",
+      "input_utf8": "abc",
+      "expected_hex": "66c7f0f462eeedd9d1f2d46bdc10e4e24167c4875cf2f7a2297da02b8f4ba8e0"
+    },
+    {
+      "name": "empty",
+      "input_utf8": "",
+      "expected_hex": "1ab21d8355cfa17f8e61194831e81a8f22bec8c728fefb747ed035eb5082aa2b"
+    },
+    {
+      "name": "block-boundary-64a",
+      "input_repeat": {"text": "a", "count": 64},
+      "expected_hex": "616ec433c359e7c2b19f360e2b8f2a1b6e9ed76b8dc1a7d207b31a5341c611e9"
+    }
+  ],
+  "stream": [
+    {
+      "name": "d3-eight-bytes",
+      "input_hex": "0001020304050607",
+      "key_hex": "d3",
+      "expected_hex": "7c2122643dac8faa"
+    },
+    {
+      "name": "three-byte-key",
+      "input_hex": "000102030405060708090a0b0c0d0e0f",
+      "key_hex": "01020e",
+      "expected_hex": "6c2f18957ca64dc47ea83449a7f65902"
+    },
+    {
+      "name": "text-payload",
+      "input_utf8": "BDMS-fixture",
+      "key_hex": "d3",
+      "expected_hex": "3e646d3414cfe0d556d50cb5"
+    }
+  ],
+  "sign_value": [
+    {
+      "cursor": 1,
+      "mode": 14,
+      "ua": "Mozilla/5.0 fixture",
+      "expected": "eWgvhqF7obsvc6EptMJzhswsEf=="
+    },
+    {
+      "cursor": 513,
+      "mode": 255,
+      "ua": "Mozilla/5.0 second fixture",
+      "expected": "NZlese4C8GVHdcYIjt0g2PofFSKjy/FpA0S="
+    }
+  ],
+  "custom_base64": {
+    "input_hex": "000102030405060708090a0b",
+    "expected": "DDgdDjfhkEWmdfYB"
+  }
+}

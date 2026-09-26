@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frida Anti-Instrumentation"
+  short_description: "Handle anti-Frida and root checks"
+  default_prompt: "Use $frida-anti-instrumentation to diagnose and bypass this app's Frida or root detection."

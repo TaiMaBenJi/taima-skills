@@ -1,0 +1,155 @@
+SKILL: AI Pentest	static	40315	/var/minis/skills/SKILL: AI Pentest	AI/LLM security offensive checklist: prompt injection, jailbreaking, mod
+SKILL: Bug Identification	static	56431	/var/minis/skills/SKILL: Bug Identification	Systematic bug identification methodology: source code review patterns, 
+SKILL: Cross-Site Scripting (XSS)	static	25409	/var/minis/skills/SKILL: Cross-Site Scripting (XSS)	Cross-Site Scripting testing checklist: stored/reflected/DOM/blind XSS d
+SKILL: Exploit Development	offensive	20579	/var/minis/skills/SKILL: Exploit Development	Full exploit development course roadmap and syllabus: weekly topics, rec
+SKILL: Fast Testing Checklist	static	24314	/var/minis/skills/SKILL: Fast Testing Checklist	Speed-optimized offensive checklist for rapid assessment: quick-win vuln
+SKILL: File Upload Vulnerabilities	static	31185	/var/minis/skills/SKILL: File Upload Vulnerabilities	File upload vulnerability checklist: MIME type bypass, extension bypass,
+SKILL: HTTP Parameter Pollution (HPP)	static	17238	/var/minis/skills/SKILL: HTTP Parameter Pollution (HPP)	HTTP parameter pollution (HPP) checklist: duplicate parameter injection,
+SKILL: HTTP Request Smuggling	static	22328	/var/minis/skills/SKILL: HTTP Request Smuggling	HTTP request smuggling checklist: CL.TE, TE.CL, TE.TE variants, detectio
+SKILL: Insecure Direct Object References (IDOR)	static	26108	/var/minis/skills/SKILL: Insecure Direct Object References (IDOR)	IDOR (Insecure Direct Object Reference) testing checklist: object ID enu
+SKILL: Modern Initial Access	static	66073	/var/minis/skills/SKILL: Modern Initial Access	Initial access techniques checklist: phishing (spear/smishing), credenti
+SKILL: Modern Kernel Exploit Mitigations	offensive	59242	/var/minis/skills/SKILL: Modern Kernel Exploit Mitigations	Security mitigation reference and bypass catalog: ASLR, DEP/NX, RELRO, s
+SKILL: Novel research	static	12053	/var/minis/skills/SKILL: Novel research	Low-level keylogger architecture design: kernel driver hooks (WH_KEYBOAR
+SKILL: OAuth Security Testing	static	15538	/var/minis/skills/SKILL: OAuth Security Testing	OAuth 2.0 attack checklist: authorization code interception, redirect_ur
+SKILL: OSINT Methodology	static	23267	/var/minis/skills/SKILL: OSINT Methodology	Structured OSINT methodology framework: target definition, source select
+SKILL: Open Redirect Vulnerabilities	static	16769	/var/minis/skills/SKILL: Open Redirect Vulnerabilities	Open redirect vulnerability checklist: parameter identification, bypass 
+SKILL: Race Conditions	static	29863	/var/minis/skills/SKILL: Race Conditions	Race condition (TOCTOU) testing checklist: identifying timing windows, B
+SKILL: Remote Code Execution	static	27058	/var/minis/skills/SKILL: Remote Code Execution	Remote Code Execution testing checklist: OS command injection, SSTI-to-R
+SKILL: Server-Side Request Forgery (SSRF)	static	26391	/var/minis/skills/SKILL: Server-Side Request Forgery (SSRF)	Server-Side Request Forgery testing checklist: SSRF discovery, blind SSR
+SKILL: WAF Bypass Techniques	static	38281	/var/minis/skills/SKILL: WAF Bypass Techniques	WAF bypass techniques checklist: encoding bypass (URL/HTML/Unicode/doubl
+SKILL: Week 1: Vulnerability Classes with Real-World Examples	offensive	97031	/var/minis/skills/SKILL: Week 1: Vulnerability Classes with Real-World Examples	Exploit development curriculum covering core vulnerability classes with 
+SKILL: Week 2: Finding Vulnerabilities Through Fuzzing	static	80921	/var/minis/skills/SKILL: Week 2: Finding Vulnerabilities Through Fuzzing	Week 2 of the exploit development curriculum. Covers fuzzing methodology
+SKILL: Week 4: Crash Analysis and Exploitability Assessment	offensive	409739	/var/minis/skills/SKILL: Week 4: Crash Analysis and Exploitability Assessment	Week 4 exploit development curriculum. Crash triage and analysis methodo
+SKILL: Week 5: Basic Exploitation (Linux with Mitigations Disabled)	offensive	354786	/var/minis/skills/SKILL: Week 5: Basic Exploitation (Linux with Mitigations Disabled)	Week 5 exploit development curriculum. Foundational exploitation techniq
+SKILL: Week 6: Understanding Windows Mitigations	static	530972	/var/minis/skills/SKILL: Week 6: Understanding Windows Mitigations	Deep-dive on Windows exploit mitigations: ASLR, DEP/NX, CFG, CET/Shadow 
+SKILL: Week 7: Defeating Windows Security Boundaries	static	568038	/var/minis/skills/SKILL: Week 7: Defeating Windows Security Boundaries	Windows security boundary taxonomy and attack surface enumeration: kerne
+SKILL: XML External Entity (XXE) Injection	static	28917	/var/minis/skills/SKILL: XML External Entity (XXE) Injection	XML External Entity injection testing checklist: classic XXE, blind XXE 
+adscan-ad-agents	offensive	683	/var/minis/skills/adscan-ad-agents	Active Directory 攻击多智能体定义集（3 个角色：攻击规划 / 枚举 / 利用操作）。配合 ADScan 工作流或独立用于红队 
+aflpp	offensive	22454	/var/minis/skills/aflpp	AFL++ 多核 Fuzzing：C/C++ 项目插桩 / 跑起来 / 出 crash
+ai-agent-tool-abuse	static	2680	/var/minis/skills/ai-agent-tool-abuse	Abuse an LLM agent's tools/functions — coerce it to call tools with atta
+ai-jailbreak	static	2414	/var/minis/skills/ai-jailbreak	Bypass an LLM's safety/guardrails to make it produce restricted output o
+ai-mcp-security	static	2934	/var/minis/skills/ai-mcp-security	Assess Model Context Protocol (MCP) servers and agent tool integrations 
+ai-prompt-injection	static	2844	/var/minis/skills/ai-prompt-injection	Test LLM-backed apps for prompt injection (direct + indirect) and its co
+android-native-auto-reverse	android	15925	/var/minis/skills/android-native-auto-reverse	安卓逆向统一入口：APK/AAB/XAPK/DEX/JAR/AAR/ELF.so 全流程
+android-reverse-engineering	android	16278	/var/minis/skills/android-reverse-engineering	jadx / Fernflower 反编译 APK / XAPK / JAR / AAR
+android-static-analysis	android	10478	/var/minis/skills/android-static-analysis	APK 静态分析：反编译 / Manifest / 代码审计
+api-auth-attacks	static	2205	/var/minis/skills/api-auth-attacks	Break API authentication: token handling, key leakage, weak session/JWT,
+api-bola	static	2369	/var/minis/skills/api-bola	Broken Object/Function Level Authorization in REST/JSON APIs (the #1 API
+api-testing-checklist	static	3786	/var/minis/skills/api-testing-checklist	A fast, ordered methodology for assessing an API end to end — REST/Graph
+bangcle-unpack	android	2032	/var/minis/skills/bangcle-unpack	梆梆企业加固脱壳专技：classes0.jar 直接解密 + Frida 内存 dump 双路线
+bin-triage	triage	2229	/var/minis/skills/bin-triage	任意文件的第一步：格式识别 + 基础分诊（纯 stdlib，什么文件都能先过一遍）
+bindiff	diff	5334	/var/minis/skills/bindiff	Google BinDiff 函数匹配（跨版本对比）
+callgraph-tracer	static	17008	/var/minis/skills/callgraph-tracer	调用图 / 执行路径 / 跨模块 xref 链追踪（DeepExtractIDA 库）
+ctf-forensics	ctf	36687	/var/minis/skills/ctf-forensics	CTF 数字取证与信号分析
+ctf-malware	ctf	8392	/var/minis/skills/ctf-malware	CTF 恶意代码与网络流量分析
+ctf-pwn	ctf	19487	/var/minis/skills/ctf-pwn	CTF 二进制利用：溢出 / 格式化 / 堆 / ROP / 内核 / 沙箱逃逸
+ctf-reverse	ctf	13279	/var/minis/skills/ctf-reverse	CTF 逆向解题技术
+ctf-sandbox	offensive	1496	/var/minis/skills/ctf-sandbox	Thin PRIMARY for CTF / AWD / 靶场 multi-type orchestration. Hands off to t
+ctf-sandbox-orchestrator	static	7423	/var/minis/skills/ctf-sandbox-orchestrator	Default entrypoint and master ctf-sandbox-orchestrator workflow for CTF,
+deepextract-agents	static	961	/var/minis/skills/deepextract-agents	DeepExtractRuntime 的深提取多智能体集（8 个角色：code-lifter / logic-scanner / memory-
+dex-dump	android	2757	/var/minis/skills/dex-dump	运行中 App 内存 DEX / CompactDex dump（脱壳）
+diaphora-diff	diff	7958	/var/minis/skills/diaphora-diff	Diaphora 函数匹配 / 伪代码恢复（开源的 BinDiff 替代）
+dotnet-decompile	lang	1085	/var/minis/skills/dotnet-decompile	.NET 程序集反编译回 C#（ilspycmd）
+dsh	misc	1640	/var/minis/skills/dsh	dsh 破限者 —— 为 DeepSeek Harness（dsh）打造的「解除限制执行器」技能包，适配 deepseek-v4-flash（7
+dsh-apk-reverse	android	11910	/var/minis/skills/dsh-apk-reverse	CLI 环境 APK 逆向：解包 / 反编译 / smali 改 / 重打包 / Frida
+dsh-edr-bypass	offensive	9567	/var/minis/skills/dsh-edr-bypass	先逆向 EDR/AV 实现 → 再写针对性绕过（unhook/间接 syscall/ETW patch）
+dsh-pojia-mode	misc	1319	/var/minis/skills/dsh-pojia-mode	DSH（DeepSeek Harness）「破甲模式」安装器 v1.0（Windows / PowerShell）：双击即装、不改 DSH 代码
+dsl-vm-reverse	static	11760	/var/minis/skills/dsl-vm-reverse	Reverse JavaScript-based custom DSL/VM interpreters, non-standard WASM-l
+dwarf-expert	static	6020	/var/minis/skills/dwarf-expert	DWARF 调试信息解析（符号恢复 / 类型考古）
+elf-analyze	triage	2044	/var/minis/skills/elf-analyze	ELF 静态分诊：架构 / 段 / 符号 / 加固特征（pyelftools）
+emulate-code	debug	2242	/var/minis/skills/emulate-code	裸 code / shellcode 在虚拟 CPU 上仿真（x86/x64/ARM/ARM64）
+exploit-chaining	offensive	2416	/var/minis/skills/exploit-chaining	Combine low/medium findings into one high-impact exploit chain, and ampl
+exploit-memory-corruption	offensive	4248	/var/minis/skills/exploit-memory-corruption	Turn a memory-corruption bug in a native binary into code execution — st
+exploit-poc-development	offensive	2412	/var/minis/skills/exploit-poc-development	Turn a known/1-day vulnerability or a raw bug into a working, reliable P
+firmware-bringup	firmware	5975	/var/minis/skills/firmware-bringup	固件 bring-up：从黑盒二进制到可执行仿真（ripcord）
+firmware-pentest	firmware	12530	/var/minis/skills/firmware-pentest	固件 / IoT 渗透链：逆向→提取→模拟→利用（OWASP 方法论）
+frida-android-hooks	frida	3531	/var/minis/skills/frida-android-hooks	Android Frida 钩子：Java.perform / 重载 / 构造器 / Kotlin / JNI / Gadget
+frida-android-instrument	frida	3209	/var/minis/skills/frida-android-instrument	动态检查 Android Java 运行时（授权 App 的运行时透视）
+frida-anti-instrumentation	frida	2187	/var/minis/skills/frida-anti-instrumentation	反 Frida / 反调试 / root / 越狱检测的识别与绕过
+frida-ios-hooks	frida	3082	/var/minis/skills/frida-ios-hooks	iOS Frida 钩子：Objective-C / Swift
+frida-native-hooks	frida	3567	/var/minis/skills/frida-native-hooks	原生函数钩子：C/C++/ObjC 导出 / 导入 / 内存层
+frida-tls-pinning	frida	1880	/var/minis/skills/frida-tls-pinning	TLS 证书绑定绕过（Android/iOS/Flutter，Frida 版）
+frida-trace	frida	1384	/var/minis/skills/frida-trace	Frida 动态追踪：网络等关键行为一网打尽
+gdb	debug	13942	/var/minis/skills/gdb	Debug and trace C/C++/Rust programs with the GNU Debugger (GDB) without 
+ghidra-decompile	static	1845	/var/minis/skills/ghidra-decompile	Ghidra headless 全自动反编译（一行命令出伪代码）
+ghidra-rpc	static	38775	/var/minis/skills/ghidra-rpc	Ghidra RPC 深交互逆向助手：脚本化查符号 / xref / 反编译
+ida-pro-skill	triage	4748	/var/minis/skills/ida-pro-skill	Use this skill only when Codex needs to work with a currently running ID
+identifying-anti-debugging-techniques	offensive	3383	/var/minis/skills/identifying-anti-debugging-techniques	恶意软件反调试 / 反分析检测识别与绕过
+intellidiff	diff	2534	/var/minis/skills/intellidiff	精确 / 规范化文件对比、二进制 diff
+ios-reverse-engineering	ios	27745	/var/minis/skills/ios-reverse-engineering	iOS 逆向：IPA / .app / Mach-O / dylib / 框架提取分析
+js-deobfuscate	lang	3166	/var/minis/skills/js-deobfuscate	JavaScript 混淆还原 / 解包（webcrack）
+js-reverse-ops	debug	14682	/var/minis/skills/js-reverse-ops	Execute advanced JavaScript reverse-engineering workflows for modern web
+jvm-decompile	lang	1223	/var/minis/skills/jvm-decompile	Java / Android 字节码反编译（apk/dex/jar/class）
+kimi-break	misc	1014	/var/minis/skills/kimi-break	kimi-break —— 针对 Kimi Code CLI Agent 的红队系统提示词（SYSTEM.md，完整 drop-in 替换版，人
+macho-analyze	triage	1977	/var/minis/skills/macho-analyze	Mach-O 静态分诊：macOS/iOS 可执行文件 / dylib / bundle
+malware-dynamic-analysis	malware	19642	/var/minis/skills/malware-dynamic-analysis	隔离 VM 行为分析（执行后的动态侧）
+malware-triage	malware	13726	/var/minis/skills/malware-triage	恶意样本快速静态分诊 / 分级 / 优先级（样本到手第一步）
+minis-400-guard	misc	10258	/var/minis/skills/minis-400-guard	Minis 会话 400 错误的预防、检测与自愈（两类：A=tool_calls 粘死 / B=上下文超限）。当用户或会话提到「400」「too
+mobile-cert-pinning-bypass	mobile	2123	/var/minis/skills/mobile-cert-pinning-bypass	证书绑定绕过总法：抓包被挡先读它（SSL handshake 失败信号）
+mobile-security-suite	mobile	1728	/var/minis/skills/mobile-security-suite	移动安全评估套件：12 维度 / MASVS 检查表 / 威胁建模
+native-decompile	static	1387	/var/minis/skills/native-decompile	原生二进制 → 类 C 伪代码（r2ghidra / r2 系）
+native-disassemble	static	2406	/var/minis/skills/native-disassemble	PE/ELF/Mach-O → 面向函数的反汇编
+native-lift	static	3662	/var/minis/skills/native-lift	机器码区间 lift 到 LLVM IR（x86/amd64/aarch64）
+offensive-active-directory	offensive	13847	/var/minis/skills/offensive-active-directory	内网 Active Directory 攻击方法论（红队内网）
+offensive-anti-forensics	offensive	19476	/var/minis/skills/offensive-anti-forensics	反取证 / 痕迹销毁（红队行动侧）
+offensive-c2-frameworks	offensive	22356	/var/minis/skills/offensive-c2-frameworks	C2 框架部署 / 配置 / 运营（红队基础设施）
+offensive-edr-evasion	offensive	84907	/var/minis/skills/offensive-edr-evasion	EDR 绕过清单：unhooking / 直接 syscall / AMSI / ETW / 注入变体
+offensive-exploit-development	offensive	34346	/var/minis/skills/offensive-exploit-development	漏洞利用开发：环境 / pwntools / pwndbg / 堆利用 / 可靠性
+offensive-shellcode	offensive	18885	/var/minis/skills/offensive-shellcode	Shellcode 开发参考（编码器 / 加载器 / 限制绕行）
+open-static-malware-analysis	malware	31765	/var/minis/skills/open-static-malware-analysis	Static malware analysis skill for examining suspicious files without exe
+payloads-file-transfers	offensive	3860	/var/minis/skills/payloads-file-transfers	Move files on/off a target when there's no shared drive — upload tools (
+payloads-reverse-shells	offensive	4943	/var/minis/skills/payloads-reverse-shells	Get a reliable reverse (or bind) shell and upgrade it to a real interact
+payloads-waf-bypass	offensive	2520	/var/minis/skills/payloads-waf-bypass	Bypass WAFs/filters blocking your payloads. Load when a payload that sho
+payloads-xss-polyglots	offensive	2021	/var/minis/skills/payloads-xss-polyglots	Context-breaking XSS polyglots and per-context payloads that fire across
+pe-analyze	triage	2045	/var/minis/skills/pe-analyze	PE 静态分诊：Windows EXE/DLL 机器码 / 导入表 / 壳（pefile）
+pojia-next	lang	1198	/var/minis/skills/pojia-next	破甲一键通 v7.5 —— 把多套破甲工具合并为一个一键脚本（目标：DSH / WorkBuddy / ZCode；统一人格、备份/回滚、破甲自
+practical-malware-analysis	static	3627	/var/minis/skills/practical-malware-analysis	Defensive malware analysis and reverse-engineering workflow. Use for aut
+privesc-arsenal	static	9094	/var/minis/skills/privesc-arsenal	One line: Linux + Windows local privilege-escalation tool arsenal for au
+privesc-linux-gtfobins	static	2419	/var/minis/skills/privesc-linux-gtfobins	Linux privilege escalation via sudo rules, SUID/SGID binaries, and capab
+privesc-windows-tokens	static	2504	/var/minis/skills/privesc-windows-tokens	Windows privilege escalation via token impersonation privileges — SeImpe
+protection-survey	triage	2128	/var/minis/skills/protection-survey	源码树扫描：反分析 / 保护模式特征普查（加固识别）
+pwn-chain	offensive	9564	/var/minis/skills/pwn-chain	从逆向到可用利用（Working Exploit）的全链路工程化方法
+pyc-decompile	lang	2244	/var/minis/skills/pyc-decompile	Python 字节码（.pyc）反编译回源码
+qiling-emulate	debug	2881	/var/minis/skills/qiling-emulate	Qiling 全二进制仿真：PE/ELF/Mach-O 在沙箱里跑起来
+r2-recon	static	2954	/var/minis/skills/r2-recon	radare2 跨格式静态侦察：函数 / 字符串 / xref 全景
+recon-arsenal	static	7156	/var/minis/skills/recon-arsenal	One line: port/host/service discovery tool arsenal for authorized engage
+recon-js-analysis	static	2026	/var/minis/skills/recon-js-analysis	Mine JavaScript for endpoints, params, secrets, and hidden functionality
+reconstruct-types	static	12471	/var/minis/skills/reconstruct-types	从 IDA 反编译输出重建 C/C++ 结构体 / 类定义
+renef	mobile	13803	/var/minis/skills/renef	Use when operating renef / renef.io to instrument Android ARM64 apps: ho
+reporting — findings schema, panel export, report automation	static	3484	/var/minis/skills/reporting — findings schema, panel export, report automation	Turn engagement output (reports, evidence chains, case dirs) into machin
+reporting-pentest-report	static	2469	/var/minis/skills/reporting-pentest-report	Structure a professional penetration-test report (engagement deliverable
+rev-dex-dumper	android	2466	/var/minis/skills/rev-dex-dumper	DEX dump 脱壳 / 解混淆流程
+rev-frida	frida	10390	/var/minis/skills/rev-frida	现代 Frida API 钩子脚本生成（激活即产出可直接跑的 agent）
+rev-idapython	static	19094	/var/minis/skills/rev-idapython	IDAPython / IDALib 脚本参考（批量自动化）
+rev-library-router	meta	7142	/var/minis/skills/rev-library-router	逆向总路由 v2：本机 2075 技能索引 + 全量技能库检索法（skillctl.sh）
+rev-sandbox	env	17814	/var/minis/skills/rev-sandbox	沙箱环境手册：Alpine aarch64+PRoot 下哪些工具能用、仿真层（xrun）、防卡死纪律——动手前必读
+rev-struct	static	6012	/var/minis/skills/rev-struct	从内存访问模式重建数据结构
+rev-symbol	static	6917	/var/minis/skills/rev-symbol	从代码模式 / 字符串 / 常量恢复函数符号
+rev-unicorn-debug	debug	4462	/var/minis/skills/rev-unicorn-debug	Unicorn 针对代码片段 / 单函数的仿真调试
+reverse-skill	games	2666	/var/minis/skills/reverse-skill	逆向/渗透/安全任务总路由包——zhaoxuya520/reverse-skill 完整仓库已装于本机 /var/minis/skills/re
+reverse-skill-router	static	1489	/var/minis/skills/reverse-skill-router	Use the reverse-skill repository. The full package is installed locally 
+sci-skill	web	22221	/var/minis/skills/sci-skill	A beginner-friendly, stage-gated research and SCI paper collaboration sk
+self-evolution	meta	8606	/var/minis/skills/self-evolution	自我进化例程：卡点→解除限制、成功→沉淀工具；含 limits.md 限制台账
+shellcode-stub	offensive	3869	/var/minis/skills/shellcode-stub	裸 shellcode → 可运行 native PoC 的包装器
+skill-creator	meta	3921	/var/minis/skills/skill-creator	创建 / 更新技能的规范指南（SKILL.md 结构与写法）
+specialized-file-analyzer	triage	42398	/var/minis/skills/specialized-file-analyzer	特殊文件深析：.NET 及标准 PE 之外的分析路径
+spider-king	mobile	29342	/var/minis/skills/spider-king	Pure-web protocol reverse skill: turn hostile browser clients into brows
+syscall-trace	debug	1504	/var/minis/skills/syscall-trace	系统调用追踪：strace / dtruss
+universal-reverse-engineering	static	11178	/var/minis/skills/universal-reverse-engineering	万能逆向：Android/原生/跨格式自动选工具链（拿不准就看它）
+unpack	triage	2372	/var/minis/skills/unpack	递归解包到不动点：zip/tar/gz/xz/7z/自解压/固件镜像层层剥
+variant-analysis	diff	3903	/var/minis/skills/variant-analysis	变体猎杀：已找到一个漏洞后，找它的所有同类
+web-arsenal	static	7525	/var/minis/skills/web-arsenal	One line: web enumeration + exploitation tool arsenal for authorized eng
+web-auth-jwt	static	2498	/var/minis/skills/web-auth-jwt	Attack JWT/session authentication. Load when auth uses a JWT (three base
+web-cache-poisoning	static	2560	/var/minis/skills/web-cache-poisoning	Web cache poisoning & deception — get a shared cache to serve attacker c
+web-command-injection	static	2885	/var/minis/skills/web-command-injection	Turn user input that reaches a shell into arbitrary OS command execution
+web-csrf	static	2290	/var/minis/skills/web-csrf	Cross-Site Request Forgery — force a victim's browser to perform state-c
+web-deserialization	static	2334	/var/minis/skills/web-deserialization	Insecure deserialization → RCE via gadget chains. Load when the app dese
+web-lfi-path-traversal	static	2774	/var/minis/skills/web-lfi-path-traversal	Local File Inclusion / path traversal → read files, sometimes RCE. Load 
+web-sqli	static	3317	/var/minis/skills/web-sqli	Detect and exploit SQL injection (error-based, UNION, boolean/time blind
+web-ssti	static	2540	/var/minis/skills/web-ssti	Server-Side Template Injection → RCE. Load when user input is rendered b
+web-testing-checklist	static	2196	/var/minis/skills/web-testing-checklist	A fast, ordered checklist for testing a web application end to end — so 
+xiaoliu-pojia	ctf	1080	/var/minis/skills/xiaoliu-pojia	小liu破甲 v2 —— 针对 gpt-5.6-sol / gpt-5.5 的 Codex CLI 破甲提示词与一键部署工具（deploy.py
+yara-rule-authoring	malware	23812	/var/minis/skills/yara-rule-authoring	YARA-X 高质量检测规则编写（含测试方法）
+yara-scan	malware	1836	/var/minis/skills/yara-scan	YARA 扫描文件 / 目录（classic + YARA-X）
+zhaoxuya-field-journal	static	3990	/var/minis/skills/zhaoxuya-field-journal	逆向/安全实战日记合集（45 篇真实案例，含 Android/Go/DSL-VM/Electron/固件/APK 等方向的一手复盘笔记）。当遇到
+🔄 DSL 自定义虚拟机逆向（DSL VM Reverse Engineering）	static	11382	/var/minis/skills/🔄 DSL 自定义虚拟机逆向（DSL VM Reverse Engineering）	逆向基于 JavaScript 实现的自定义 WASM 虚拟机/风控引擎：识别特征、opcode 提取与分类、运行时捕获、状态码对照与自检清单。
